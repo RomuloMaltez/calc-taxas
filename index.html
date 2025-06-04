@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadoras de Taxas - Porto Velho</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-button.active {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        }
+
+        .section {
+            background: white;
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .calculadoras-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .calculadora-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calculadora-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #9f7aea;
+        }
+
+        .calculadora-card.implementada {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border-color: #38a169;
+            cursor: pointer;
+        }
+
+        .calculadora-card.implementada:hover {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .calculadora-card.implementada::after {
+            content: "👆 Clique aqui";
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+
+        .calculadora-card.em-breve {
+            background: linear-gradient(135deg, #fbb6ce 0%, #f093fb 100%);
+            color: white;
+            border-color: #f093fb;
+        }
+
+        .calculadora-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .calculadora-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculadora-status {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #9f7aea;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .calc-button {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+
+        .calc-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .calc-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            display: none;
+        }
+
+        .result-details {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            text-align: left;
+            font-size: 1em;
+            font-weight: normal;
+        }
+
+        .relatorio-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .relatorio-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .relatorio-valor {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #38a169;
+        }
+
+        .relatorio-total {
+            background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .tip-box {
+            background: #fef5e7;
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #f6ad55;
+            color: #2d3748;
+        }
+
+        .tip-box::before {
+            content: "💡 ";
+            font-size: 1.5em;
+        }
+
+        .factor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .factor-table th,
+        .factor-table td {
+            border: 1px solid #e2e8f0;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .factor-table th {
+            background: linear-gradient(135deg, #e6fffa 0%, #f0fff4 100%);
+            font-weight: bold;
+        }
+
+        .highlighted-row {
+            background-color: #fed7aa !important;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .calculadoras-grid { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+            .nav-buttons { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧮 Calculadoras de Taxas</h1>
+            <p>Portal unificado para cálculo das taxas municipais de Porto Velho</p>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-button active" onclick="showSection('home', this)">🏠 Início</button>
+            <button class="nav-button" onclick="showSection('calculator', this)">🧮 Calculadora</button>
+            <button class="nav-button" onclick="showSection('relatorios', this)">📊 Relatórios</button>
+        </div>
+
+        <!-- Seção Principal -->
+        <div id="home-section" class="section">
+            <h2 style="color: #5a67d8; margin-bottom: 20px; text-align: center;">
+                🏛️ Escolha a Calculadora Desejada
+            </h2>
+            
+            <div class="tip-box">
+                <strong>Como usar:</strong> Escolha a taxa que você precisa calcular. Atualmente, a Calculadora de TFFR está disponível. 
+                As demais calculadoras serão implementadas em breve conforme a demanda e disponibilidade das fórmulas oficiais.
+            </div>
+
+            <div style="background: #e6fffa; border: 1px solid #4fd1c7; border-radius: 8px; padding: 15px; margin: 20px 0; border-left: 4px solid #38b2ac; color: #2d3748;">
+                <strong>ℹ️ Informação:</strong> Os relatórios de cálculos ficam salvos durante sua sessão. Para manter os dados permanentemente, 
+                use a função "Exportar Relatórios" antes de fechar o navegador.
+            </div>
+
+            <h3 style="color: #2d3748; margin: 30px 0 15px 0;">📋 Taxas de Fiscalização e Controle</h3>
+            <div class="calculadoras-grid">
+                <div class="calculadora-card implementada" onclick="selectCalculadora('tffr')">
+                    <span class="calculadora-icon">🏢</span>
+                    <div class="calculadora-title">Taxa de Fiscalização do Funcionamento Regular (TFFR)</div>
+                    <div class="calculadora-status">✅ Disponível - Clique para calcular</div>
+                </div>
+                
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">📺</span>
+                    <div class="calculadora-title">Taxa de Fiscalização de Exposição de Publicidade</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+                
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">🛣️</span>
+                    <div class="calculadora-title">Taxa de Fiscalização de Atividades em Logradouro Público</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+                
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">🏥</span>
+                    <div class="calculadora-title">Taxa de Fiscalização Sanitária</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+                
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">🌱</span>
+                    <div class="calculadora-title">Taxa de Fiscalização Ambiental</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+                
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">🚌</span>
+                    <div class="calculadora-title">Taxa de Fiscalização de Transportes Públicos</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+            </div>
+
+            <h3 style="color: #2d3748; margin: 30px 0 15px 0;">📄 Taxas de Licença</h3>
+            <div class="calculadoras-grid">
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">📍</span>
+                    <div class="calculadora-title">Taxa de Licença de Localização de Atividades</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+                
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">🏗️</span>
+                    <div class="calculadora-title">Taxa de Licença de Execução de Obras</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+                
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">📢</span>
+                    <div class="calculadora-title">Taxa de Licença de Anúncios Publicitários</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+                
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">🏷️</span>
+                    <div class="calculadora-title">Taxa de Licença de Uso</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+                
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">🧪</span>
+                    <div class="calculadora-title">Taxa de Licença Sanitária</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+                
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">🌿</span>
+                    <div class="calculadora-title">Taxa de Licença Ambiental</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+                
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">🎪</span>
+                    <div class="calculadora-title">Taxa de Licença de Localização Temporária de Eventos</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+                
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">🚖</span>
+                    <div class="calculadora-title">Taxa de Licença de Transportes Públicos</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+            </div>
+
+            <h3 style="color: #2d3748; margin: 30px 0 15px 0;">🔍 Outras Taxas</h3>
+            <div class="calculadoras-grid">
+                <div class="calculadora-card em-breve">
+                    <span class="calculadora-icon">👁️</span>
+                    <div class="calculadora-title">Taxa de Vistoria</div>
+                    <div class="calculadora-status">🚧 Em breve</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Calculadora -->
+        <div id="calculator-section" class="section hidden">
+            <!-- Calculadora TFFR -->
+            <div id="tffr-calculator" class="calculator-form">
+                <h2 style="color: #5a67d8; margin-bottom: 20px;">
+                    🏢 Calculadora TFFR - Taxa de Fiscalização do Funcionamento Regular
+                </h2>
+                
+                <div style="background: #f7fafc; border: 2px solid #9f7aea; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                    <div style="color: #2d3748; margin-bottom: 10px;"><strong>🧮 Fórmula da TFFR:</strong></div>
+                    <div style="font-family: 'Courier New', monospace; font-size: 1.1em; color: #4a5568; margin: 10px 0;">
+                        TFFR = [(hd×Tfd) + (hn×Tfn)] × [(K×C1) + (X×C2) + (Y×C3)]
+                    </div>
+                    <div style="font-size: 0.9em; color: #4a5568; line-height: 1.5;">
+                        <strong>Onde:</strong><br>
+                        • <strong>hd, hn:</strong> Custo por hora diurna (0,15×UPF) e noturna (0,20×UPF)<br>
+                        • <strong>Tfd, Tfn:</strong> Tempo de funcionamento diurno e noturno<br>
+                        • <strong>K, X, Y:</strong> Fatores de atividade conforme área de cada tipo<br>
+                        • <strong>C1, C2, C3:</strong> Coeficientes (1,0 / 0,75 / 0,25) por tipo de ocupação
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="upf-value">Valor da UPF (R$)</label>
+                        <input type="number" id="upf-value" step="0.01" placeholder="Ex: 100.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nome-estabelecimento">Nome do Estabelecimento</label>
+                        <input type="text" id="nome-estabelecimento" placeholder="Ex: Loja Exemplo Ltda">
+                    </div>
+                </div>
+
+                <h3 style="color: #2d3748; margin: 20px 0 10px 0;">⏰ Tempo de Funcionamento</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="tempo-diurno">Tempo Funcionamento Diurno (horas)</label>
+                        <input type="number" id="tempo-diurno" step="0.5" placeholder="Ex: 8" min="0" max="12">
+                        <small>Período das 6h às 18h</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tempo-noturno">Tempo Funcionamento Noturno (horas)</label>
+                        <input type="number" id="tempo-noturno" step="0.5" placeholder="Ex: 0" min="0" max="12">
+                        <small>Período das 18h às 6h do dia seguinte</small>
+                    </div>
+                </div>
+
+                <h3 style="color: #2d3748; margin: 20px 0 10px 0;">📏 Áreas do Estabelecimento</h3>
+                
+                <div style="background: #e6fffa; border: 1px solid #4fd1c7; border-radius: 8px; padding: 15px; margin-bottom: 20px; border-left: 4px solid #38b2ac; color: #2d3748;">
+                    <strong>📋 Como preencher as áreas:</strong><br>
+                    • Informe apenas as áreas que se aplicam ao seu estabelecimento<br>
+                    • <strong>Área Construída:</strong> Espaço coberto onde funciona a atividade<br>
+                    • <strong>Área com Exploração Econômica:</strong> Pátio, estacionamento, área descoberta utilizada<br>
+                    • <strong>Área sem Exploração:</strong> Área verde, espaços não utilizados economicamente<br>
+                    • <em>As áreas podem ser complementares ou independentes conforme seu estabelecimento</em>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="area-construida">🏢 Área Ocupada Construída (m²)</label>
+                        <input type="number" id="area-construida" step="0.01" placeholder="Ex: 50" value="0">
+                        <small style="color: #4a5568;">Área coberta onde funciona a atividade (Coeficiente C1 = 1,0)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="area-economica">🚗 Área com Exploração Econômica (m²)</label>
+                        <input type="number" id="area-economica" step="0.01" placeholder="Ex: 0" value="0">
+                        <small style="color: #4a5568;">Pátio, estacionamento utilizado (Coeficiente C2 = 0,75)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="area-sem-exploracao">🌳 Área sem Exploração Econômica (m²)</label>
+                        <input type="number" id="area-sem-exploracao" step="0.01" placeholder="Ex: 0" value="0">
+                        <small style="color: #4a5568;">Área verde, espaços não utilizados (Coeficiente C3 = 0,25)</small>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="calc-button" onclick="calcularTFFR()">🧮 Calcular TFFR</button>
+                    <button class="calc-button" style="background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);" onclick="limparFormulario()">🔄 Limpar</button>
+                </div>
+
+                <div id="tffr-result" class="result-box">
+                    <!-- Resultado será inserido aqui -->
+                </div>
+
+                <!-- Tabela de Fatores de Atividade -->
+                <div style="margin-top: 30px;">
+                    <h3 style="color: #2d3748; margin-bottom: 15px;">📊 Tabela de Fatores de Atividade</h3>
+                    <div style="overflow-x: auto;">
+                        <table class="factor-table">
+                            <thead>
+                                <tr>
+                                    <th>Categoria</th>
+                                    <th>Área (m²)</th>
+                                    <th>Fator</th>
+                                </tr>
+                            </thead>
+                            <tbody id="factor-table-body">
+                                <!-- Tabela será preenchida pelo JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Relatórios -->
+        <div id="relatorios-section" class="section hidden">
+            <h2 style="color: #5a67d8; margin-bottom: 20px;">
+                📊 Relatórios de Cálculos Realizados
+            </h2>
+            
+            <div style="background: #fff5e6; border: 1px solid #fed7aa; border-radius: 8px; padding: 15px; margin-bottom: 20px; border-left: 4px solid #f6ad55; color: #2d3748;">
+                <strong>⚠️ Armazenamento Temporário:</strong> Os relatórios ficam salvos apenas durante esta sessão. 
+                Para guardar permanentemente, use o botão "📄 Exportar Relatórios" para baixar um arquivo.
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <button class="calc-button" onclick="limparRelatorios()">🗑️ Limpar Todos os Relatórios</button>
+                <button class="calc-button" style="background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);" onclick="exportarRelatorios()">📄 Exportar Relatórios</button>
+            </div>
+
+            <div id="relatorios-container">
+                <div style="text-align: center; color: #a0aec0; font-size: 1.2em; margin: 50px 0;">
+                    📋 Nenhum cálculo realizado ainda
+                </div>
+            </div>
+
+            <div id="relatorio-total" class="relatorio-total" style="display: none;">
+                <h3>💰 Total Geral de Todas as Taxas</h3>
+                <div id="valor-total-geral">R$ 0,00</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Estado global da aplicação (inicialização segura)
+        let relatorios = [];
+        let currentCalculator = 'tffr';
+        
+        // Função para salvar relatórios (simulando localStorage)
+        function salvarRelatorios() {
+            // Em um ambiente real, usaria localStorage
+            // localStorage.setItem('relatorios_taxas', JSON.stringify(relatorios));
+            console.log('Relatórios salvos em memória:', relatorios.length, 'itens');
+        }
+        
+        // Função para carregar relatórios (simulando localStorage)
+        function carregarRelatorios() {
+            // Em um ambiente real, carregaria do localStorage
+            // relatorios = JSON.parse(localStorage.getItem('relatorios_taxas') || '[]');
+            if (!Array.isArray(relatorios)) {
+                relatorios = [];
+            }
+            console.log('Relatórios carregados da memória:', relatorios.length, 'itens');
+        }
+
+        // Dados da tabela de fatores de atividade
+        const fatoresAtividade = [
+            { categoria: "PEQUENA ATIVIDADE", area: "Até 30m²", fator: 1.00 },
+            { categoria: "MÉDIA ATIVIDADE", area: "31-40m²", fator: 1.10 },
+            { categoria: "", area: "41-50m²", fator: 1.20 },
+            { categoria: "", area: "51-60m²", fator: 1.30 },
+            { categoria: "", area: "61-70m²", fator: 1.40 },
+            { categoria: "", area: "71-80m²", fator: 1.50 },
+            { categoria: "", area: "81-90m²", fator: 1.60 },
+            { categoria: "", area: "91-100m²", fator: 1.70 },
+            { categoria: "GRANDE ATIVIDADE", area: "101-110m²", fator: 2.00 },
+            { categoria: "", area: "111-120m²", fator: 2.10 },
+            { categoria: "", area: "121-130m²", fator: 2.20 },
+            { categoria: "", area: "131-140m²", fator: 2.30 },
+            { categoria: "", area: "141-150m²", fator: 2.50 },
+            { categoria: "", area: "151-200m²", fator: 3.00 },
+            { categoria: "", area: "201-250m²", fator: 3.80 },
+            { categoria: "", area: "251-300m²", fator: 4.60 },
+            { categoria: "", area: "301-350m²", fator: 5.40 },
+            { categoria: "", area: "351-400m²", fator: 6.20 },
+            { categoria: "", area: "401-450m²", fator: 7.00 },
+            { categoria: "", area: "451-500m²", fator: 7.80 },
+            { categoria: "", area: "501-550m²", fator: 8.60 },
+            { categoria: "", area: "551-600m²", fator: 9.40 },
+            { categoria: "", area: "601-650m²", fator: 10.20 },
+            { categoria: "", area: "651-700m²", fator: 11.00 },
+            { categoria: "", area: "701-750m²", fator: 11.80 },
+            { categoria: "", area: "751-800m²", fator: 12.60 },
+            { categoria: "", area: "801-850m²", fator: 13.40 },
+            { categoria: "", area: "851-900m²", fator: 14.20 },
+            { categoria: "", area: "901-950m²", fator: 15.00 },
+            { categoria: "", area: "951-1.000m²", fator: 15.80 },
+            { categoria: "", area: "1.001-1.050m²", fator: 16.60 },
+            { categoria: "", area: "1.051-1.100m²", fator: 17.40 },
+            { categoria: "", area: "1.101-1.150m²", fator: 18.20 },
+            { categoria: "", area: "1.151-1.200m²", fator: 19.00 },
+            { categoria: "", area: "1.201-1.250m²", fator: 19.80 },
+            { categoria: "", area: "1.251-1.300m²", fator: 20.60 },
+            { categoria: "", area: "1.301-1.350m²", fator: 21.40 },
+            { categoria: "", area: "1.351-1.400m²", fator: 22.20 },
+            { categoria: "", area: "1.401-1.450m²", fator: 23.00 },
+            { categoria: "", area: "1.451-1.500m²", fator: 23.80 },
+            { categoria: "", area: "Acima de 1.500m²", fator: "23,80 + (0,70 × cada 50m² extras)" }
+        ];
+
+        // Navegação entre seções
+        function showSection(sectionName, buttonElement = null) {
+            // Esconder todas as seções
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Remover classe active de todos os botões
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Mostrar seção selecionada
+            document.getElementById(sectionName + '-section').classList.remove('hidden');
+            
+            // Adicionar classe active ao botão clicado
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+            } else if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                // Se não há botão específico, encontrar o botão correto
+                const buttons = document.querySelectorAll('.nav-button');
+                if (sectionName === 'home') buttons[0].classList.add('active');
+                else if (sectionName === 'calculator') buttons[1].classList.add('active');
+                else if (sectionName === 'relatorios') buttons[2].classList.add('active');
+            }
+            
+            // Atualizar relatórios se estiver na seção de relatórios
+            if (sectionName === 'relatorios') {
+                atualizarRelatorios();
+            }
+        }
+
+        // Selecionar calculadora
+        function selectCalculadora(tipo) {
+            // Garantir que currentCalculator está definido
+            if (typeof currentCalculator === 'undefined') {
+                currentCalculator = 'tffr';
+            }
+            
+            currentCalculator = tipo;
+            
+            if (tipo === 'tffr') {
+                // Adicionar efeito visual de clique
+                const card = event.target.closest('.calculadora-card');
+                if (card) {
+                    card.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        card.style.transform = '';
+                    }, 150);
+                }
+                
+                // Navegar para a calculadora após o efeito
+                setTimeout(() => {
+                    showSection('calculator');
+                    // Preencher tabela de fatores
+                    preencherTabelaFatores();
+                    // Scroll para o topo
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 200);
+            } else {
+                alert('Esta calculadora ainda está em desenvolvimento. Por enquanto, apenas a TFFR está disponível.');
+            }
+        }
+
+        // Preencher tabela de fatores de atividade
+        function preencherTabelaFatores() {
+            const tbody = document.getElementById('factor-table-body');
+            tbody.innerHTML = '';
+            
+            fatoresAtividade.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: ${item.categoria ? 'bold' : 'normal'};">${item.categoria}</td>
+                    <td>${item.area}</td>
+                    <td>${typeof item.fator === 'number' ? item.fator.toFixed(2) : item.fator}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Função para obter fator de atividade baseado na área
+        function obterFatorAtividade(area) {
+            if (area <= 30) return 1.00;
+            if (area <= 40) return 1.10;
+            if (area <= 50) return 1.20;
+            if (area <= 60) return 1.30;
+            if (area <= 70) return 1.40;
+            if (area <= 80) return 1.50;
+            if (area <= 90) return 1.60;
+            if (area <= 100) return 1.70;
+            if (area <= 110) return 2.00;
+            if (area <= 120) return 2.10;
+            if (area <= 130) return 2.20;
+            if (area <= 140) return 2.30;
+            if (area <= 150) return 2.50;
+            if (area <= 200) return 3.00;
+            if (area <= 250) return 3.80;
+            if (area <= 300) return 4.60;
+            if (area <= 350) return 5.40;
+            if (area <= 400) return 6.20;
+            if (area <= 450) return 7.00;
+            if (area <= 500) return 7.80;
+            if (area <= 550) return 8.60;
+            if (area <= 600) return 9.40;
+            if (area <= 650) return 10.20;
+            if (area <= 700) return 11.00;
+            if (area <= 750) return 11.80;
+            if (area <= 800) return 12.60;
+            if (area <= 850) return 13.40;
+            if (area <= 900) return 14.20;
+            if (area <= 950) return 15.00;
+            if (area <= 1000) return 15.80;
+            if (area <= 1050) return 16.60;
+            if (area <= 1100) return 17.40;
+            if (area <= 1150) return 18.20;
+            if (area <= 1200) return 19.00;
+            if (area <= 1250) return 19.80;
+            if (area <= 1300) return 20.60;
+            if (area <= 1350) return 21.40;
+            if (area <= 1400) return 22.20;
+            if (area <= 1450) return 23.00;
+            if (area <= 1500) return 23.80;
+            
+            // Para áreas acima de 1500m²
+            const excesso = area - 1500;
+            const incrementos = Math.floor(excesso / 50);
+            return 23.80 + (incrementos * 0.70);
+        }
+
+        // Calcular TFFR
+        function calcularTFFR() {
+            try {
+                // Garantir que relatorios está definido
+                if (typeof relatorios === 'undefined') {
+                    relatorios = [];
+                }
+                
+                // Obter valores do formulário
+                const upfValue = parseFloat(document.getElementById('upf-value').value) || 0;
+                const nomeEstabelecimento = document.getElementById('nome-estabelecimento').value || 'Estabelecimento não informado';
+                const tempoDiurno = parseFloat(document.getElementById('tempo-diurno').value) || 0;
+                const tempoNoturno = parseFloat(document.getElementById('tempo-noturno').value) || 0;
+                const areaConstruida = parseFloat(document.getElementById('area-construida').value);
+                const areaEconomica = parseFloat(document.getElementById('area-economica').value);
+                const areaSemExploracao = parseFloat(document.getElementById('area-sem-exploracao').value);
+
+                // Tratar NaN como 0
+                const areaConstruidaFinal = isNaN(areaConstruida) ? 0 : areaConstruida;
+                const areaEconomicaFinal = isNaN(areaEconomica) ? 0 : areaEconomica;  
+                const areaSemExploracaoFinal = isNaN(areaSemExploracao) ? 0 : areaSemExploracao;
+
+                // Validações
+                if (upfValue <= 0) {
+                    alert('Por favor, informe o valor da UPF.');
+                    return;
+                }
+                
+                if (tempoDiurno === 0 && tempoNoturno === 0) {
+                    alert('Por favor, informe o tempo de funcionamento (diurno ou noturno).');
+                    return;
+                }
+                
+                if (areaConstruidaFinal === 0 && areaEconomicaFinal === 0 && areaSemExploracaoFinal === 0) {
+                    alert('Por favor, informe ao menos um tipo de área do estabelecimento (construída, econômica ou sem exploração).');
+                    return;
+                }
+
+                // Cálculo do componente tempo
+                const hd = 0.15; // 15% da UPF
+                const hn = 0.20; // 20% da UPF
+                const componenteTempo = (hd * tempoDiurno) + (hn * tempoNoturno);
+
+                // Cálculo do componente área
+                const K = areaConstruidaFinal > 0 ? obterFatorAtividade(areaConstruidaFinal) : 0;
+                const X = areaEconomicaFinal > 0 ? obterFatorAtividade(areaEconomicaFinal) : 0;
+                const Y = areaSemExploracaoFinal > 0 ? obterFatorAtividade(areaSemExploracaoFinal) : 0;
+                
+                const C1 = 1.0;    // Área construída
+                const C2 = 0.75;   // Área com exploração econômica
+                const C3 = 0.25;   // Área sem exploração econômica
+                
+                const componenteArea = (K * C1) + (X * C2) + (Y * C3);
+
+                // Cálculo final da TFFR
+                const tffr = componenteTempo * componenteArea;
+                const tffrReais = tffr * upfValue;
+
+                // Criar objeto do resultado
+                const resultado = {
+                    id: Date.now(),
+                    tipo: 'TFFR',
+                    nomeEstabelecimento: nomeEstabelecimento,
+                    data: new Date().toLocaleDateString('pt-BR'),
+                    hora: new Date().toLocaleTimeString('pt-BR'),
+                    dados: {
+                        upfValue,
+                        tempoDiurno,
+                        tempoNoturno,
+                        areaConstruida: areaConstruidaFinal,
+                        areaEconomica: areaEconomicaFinal,
+                        areaSemExploracao: areaSemExploracaoFinal
+                    },
+                    calculo: {
+                        componenteTempo,
+                        componenteArea,
+                        K, X, Y,
+                        tffr,
+                        tffrReais
+                    }
+                };
+
+                // Adicionar aos relatórios
+                relatorios.push(resultado);
+                salvarRelatorios();
+
+                // Exibir resultado
+                mostrarResultadoTFFR(resultado);
+                
+            } catch (error) {
+                console.error('Erro no cálculo da TFFR:', error);
+                alert('Ocorreu um erro no cálculo. Por favor, verifique os dados e tente novamente.');
+            }
+        }
+
+        // Mostrar resultado da TFFR
+        function mostrarResultadoTFFR(resultado) {
+            const resultBox = document.getElementById('tffr-result');
+            const { calculo, dados } = resultado;
+            
+            resultBox.innerHTML = `
+                <h3>✅ TFFR Calculada com Sucesso!</h3>
+                <div style="font-size: 2em; margin: 15px 0;">
+                    <strong>R$ ${calculo.tffrReais.toFixed(2)}</strong>
+                </div>
+                <div style="font-size: 1.1em;">
+                    ${calculo.tffr.toFixed(2)} × UPF (R$ ${dados.upfValue.toFixed(2)})
+                </div>
+                
+                <div class="result-details">
+                    <h4 style="margin-bottom: 15px; color: #2d3748;">📊 Detalhes do Cálculo:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                        <div style="background: #e6fffa; padding: 15px; border-radius: 8px; color: #2d3748;">
+                            <strong style="color: #1a202c;">⏰ Componente Tempo</strong><br>
+                            <span style="color: #2d3748;">${calculo.componenteTempo.toFixed(2)} × UPF</span><br>
+                            <small style="color: #4a5568;">${dados.tempoDiurno}h diurnas + ${dados.tempoNoturno}h noturnas</small>
+                        </div>
+                        <div style="background: #f0fff4; padding: 15px; border-radius: 8px; color: #2d3748;">
+                            <strong style="color: #1a202c;">📏 Componente Área</strong><br>
+                            <span style="color: #2d3748;">${calculo.componenteArea.toFixed(2)}</span><br>
+                            <small style="color: #4a5568;">Fatores ponderados por coeficientes</small>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #fef5e7; padding: 15px; border-radius: 8px; margin-bottom: 15px; color: #2d3748;">
+                        <strong>🧮 Fórmula aplicada:</strong><br>
+                        TFFR = [(0,15 × ${dados.tempoDiurno}) + (0,20 × ${dados.tempoNoturno})] × [${calculo.componenteArea.toFixed(2)}]<br>
+                        TFFR = ${calculo.componenteTempo.toFixed(2)} × ${calculo.componenteArea.toFixed(2)} = ${calculo.tffr.toFixed(2)} × UPF
+                    </div>
+                    
+                    <div style="font-size: 0.9em; color: #4a5568; margin-top: 15px;">
+                        <strong>📊 Resumo das áreas utilizadas:</strong><br>
+                        ${(() => {
+                            const areaTotal = dados.areaConstruida + dados.areaEconomica + dados.areaSemExploracao;
+                            const areas = [];
+                            
+                            if (dados.areaConstruida > 0) areas.push(dados.areaConstruida.toLocaleString('pt-BR'));
+                            if (dados.areaEconomica > 0) areas.push(dados.areaEconomica.toLocaleString('pt-BR'));
+                            if (dados.areaSemExploracao > 0) areas.push(dados.areaSemExploracao.toLocaleString('pt-BR'));
+                            
+                            let areaSoma = areas.length > 1 ? `${areas.join(' + ')} = ${areaTotal.toLocaleString('pt-BR')} m²` : `${areaTotal.toLocaleString('pt-BR')} m²`;
+                            
+                            return `📏 <strong>Área Total:</strong> ${areaSoma}`;
+                        })()}<br><br>
+                        <strong>📊 Fatores aplicados por tipo de área:</strong><br>
+                        ${dados.areaConstruida > 0 ? `• Área construída ${dados.areaConstruida.toLocaleString('pt-BR')}m² → Fator ${calculo.K.toFixed(2)} × Coef. 1,0 = ${(calculo.K * 1.0).toFixed(2)}<br>` : ''}
+                        ${dados.areaEconomica > 0 ? `• Área econômica ${dados.areaEconomica.toLocaleString('pt-BR')}m² → Fator ${calculo.X.toFixed(2)} × Coef. 0,75 = ${(calculo.X * 0.75).toFixed(2)}<br>` : ''}
+                        ${dados.areaSemExploracao > 0 ? `• Área sem exploração ${dados.areaSemExploracao.toLocaleString('pt-BR')}m² → Fator ${calculo.Y.toFixed(2)} × Coef. 0,25 = ${(calculo.Y * 0.25).toFixed(2)}<br>` : ''}
+                        <strong>Total do componente área:</strong> ${calculo.componenteArea.toFixed(2)}
+                    </div>
+                </div>
+            `;
+            
+            resultBox.style.display = 'block';
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Limpar formulário
+        function limparFormulario() {
+            document.getElementById('upf-value').value = '';
+            document.getElementById('nome-estabelecimento').value = '';
+            document.getElementById('tempo-diurno').value = '';
+            document.getElementById('tempo-noturno').value = '';
+            document.getElementById('area-construida').value = '0';
+            document.getElementById('area-economica').value = '0';
+            document.getElementById('area-sem-exploracao').value = '0';
+            document.getElementById('tffr-result').style.display = 'none';
+        }
+
+        // Atualizar relatórios
+        function atualizarRelatorios() {
+            const container = document.getElementById('relatorios-container');
+            const totalContainer = document.getElementById('relatorio-total');
+            const valorTotalGeral = document.getElementById('valor-total-geral');
+            
+            if (relatorios.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; color: #a0aec0; font-size: 1.2em; margin: 50px 0;">
+                        📋 Nenhum cálculo realizado ainda
+                    </div>
+                `;
+                totalContainer.style.display = 'none';
+                return;
+            }
+            
+            let totalGeral = 0;
+            let html = '';
+            
+            relatorios.reverse().forEach((relatorio, index) => {
+                totalGeral += relatorio.calculo.tffrReais;
+                
+                // Mostrar áreas de forma mais clara
+                let areaInfo = '';
+                if (relatorio.dados.areaConstruida > 0) {
+                    areaInfo += `${relatorio.dados.areaConstruida}m² construída`;
+                }
+                if (relatorio.dados.areaEconomica > 0) {
+                    if (areaInfo) areaInfo += ', ';
+                    areaInfo += `${relatorio.dados.areaEconomica}m² econômica`;
+                }
+                if (relatorio.dados.areaSemExploracao > 0) {
+                    if (areaInfo) areaInfo += ', ';
+                    areaInfo += `${relatorio.dados.areaSemExploracao}m² s/ exploração`;
+                }
+                
+                html += `
+                    <div class="relatorio-item">
+                        <div class="relatorio-header">
+                            <div>
+                                <h3 style="color: #2d3748;">🏢 ${relatorio.tipo} - ${relatorio.nomeEstabelecimento}</h3>
+                                <p style="color: #4a5568; margin: 5px 0;">📅 ${relatorio.data} às ${relatorio.hora}</p>
+                            </div>
+                            <div class="relatorio-valor">R$ ${relatorio.calculo.tffrReais.toFixed(2)}</div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                            <div>
+                                <strong>⏰ Funcionamento:</strong><br>
+                                ${relatorio.dados.tempoDiurno}h diurnas + ${relatorio.dados.tempoNoturno}h noturnas
+                            </div>
+                            <div>
+                                <strong>📏 Áreas:</strong><br>
+                                ${areaInfo}
+                            </div>
+                            <div>
+                                <strong>💰 UPF:</strong><br>
+                                R$ ${relatorio.dados.upfValue.toFixed(2)}
+                            </div>
+                            <div>
+                                <strong>🧮 Fator:</strong><br>
+                                ${relatorio.calculo.tffr.toFixed(2)} × UPF
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; text-align: right;">
+                            <button class="calc-button" style="background: #e53e3e; font-size: 0.9em; padding: 8px 15px;" onclick="removerRelatorio(${relatorio.id})">🗑️ Remover</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            relatorios.reverse(); // Voltar à ordem original
+            
+            container.innerHTML = html;
+            valorTotalGeral.textContent = `R$ ${totalGeral.toFixed(2)}`;
+            totalContainer.style.display = 'block';
+        }
+
+        // Remover relatório específico
+        function removerRelatorio(id) {
+            if (confirm('Tem certeza que deseja remover este relatório?')) {
+                relatorios = relatorios.filter(r => r.id !== id);
+                salvarRelatorios();
+                atualizarRelatorios();
+            }
+        }
+
+        // Limpar todos os relatórios
+        function limparRelatorios() {
+            if (confirm('Tem certeza que deseja remover TODOS os relatórios? Esta ação não pode ser desfeita.')) {
+                relatorios = [];
+                salvarRelatorios();
+                atualizarRelatorios();
+            }
+        }
+
+        // Exportar relatórios
+        function exportarRelatorios() {
+            if (relatorios.length === 0) {
+                alert('Não há relatórios para exportar.');
+                return;
+            }
+            
+            let conteudo = `RELATÓRIO DE TAXAS MUNICIPAIS - PORTO VELHO\n`;
+            conteudo += `Gerado em: ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}\n`;
+            conteudo += `${'='.repeat(60)}\n\n`;
+            
+            let totalGeral = 0;
+            
+            relatorios.forEach((relatorio, index) => {
+                totalGeral += relatorio.calculo.tffrReais;
+                
+                // Calcular área total para exportação
+                const areaTotal = relatorio.dados.areaConstruida + relatorio.dados.areaEconomica + relatorio.dados.areaSemExploracao;
+                
+                // Montar string da soma das áreas para exportação
+                let areaSoma = '';
+                let areaDetalhes = '';
+                const areas = [];
+                
+                if (relatorio.dados.areaConstruida > 0) {
+                    areas.push(relatorio.dados.areaConstruida.toLocaleString('pt-BR'));
+                    areaDetalhes += `${relatorio.dados.areaConstruida.toLocaleString('pt-BR')}m² construída`;
+                }
+                if (relatorio.dados.areaEconomica > 0) {
+                    areas.push(relatorio.dados.areaEconomica.toLocaleString('pt-BR'));
+                    if (areaDetalhes) areaDetalhes += ', ';
+                    areaDetalhes += `${relatorio.dados.areaEconomica.toLocaleString('pt-BR')}m² econômica`;
+                }
+                if (relatorio.dados.areaSemExploracao > 0) {
+                    areas.push(relatorio.dados.areaSemExploracao.toLocaleString('pt-BR'));
+                    if (areaDetalhes) areaDetalhes += ', ';
+                    areaDetalhes += `${relatorio.dados.areaSemExploracao.toLocaleString('pt-BR')}m² sem exploração`;
+                }
+                
+                if (areas.length > 1) {
+                    areaSoma = `${areas.join(' + ')} = ${areaTotal.toLocaleString('pt-BR')} m²`;
+                } else {
+                    areaSoma = `${areaTotal.toLocaleString('pt-BR')} m²`;
+                }
+                
+                conteudo += `${index + 1}. ${relatorio.tipo} - ${relatorio.nomeEstabelecimento}\n`;
+                conteudo += `   Data: ${relatorio.data} às ${relatorio.hora}\n`;
+                conteudo += `   Funcionamento: ${relatorio.dados.tempoDiurno}h diurnas + ${relatorio.dados.tempoNoturno}h noturnas\n`;
+                conteudo += `   Área Total: ${areaSoma}\n`;
+                conteudo += `   Detalhes: ${areaDetalhes}\n`;
+                conteudo += `   UPF: R$ ${relatorio.dados.upfValue.toFixed(2)}\n`;
+                conteudo += `   Fator: ${relatorio.calculo.tffr.toFixed(2)} × UPF\n`;
+                conteudo += `   VALOR: R$ ${relatorio.calculo.tffrReais.toFixed(2)}\n`;
+                conteudo += `   ${'-'.repeat(40)}\n\n`;
+            });
+            
+            conteudo += `TOTAL GERAL: R$ ${totalGeral.toFixed(2)}\n`;
+            conteudo += `${'='.repeat(60)}\n`;
+            
+            // Criar e baixar arquivo
+            const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `relatorio_taxas_${new Date().toLocaleDateString('pt-BR').replace(/\//g, '-')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // Garantir que as variáveis globais estão definidas
+                if (typeof relatorios === 'undefined') {
+                    relatorios = [];
+                }
+                if (typeof currentCalculator === 'undefined') {
+                    currentCalculator = 'tffr';
+                }
+                
+                carregarRelatorios();
+                preencherTabelaFatores();
+                atualizarRelatorios();
+                
+                console.log('App inicializado com sucesso');
+            } catch (error) {
+                console.error('Erro na inicialização:', error);
+                // Fallback: garantir que o app funcione mesmo com erros
+                relatorios = [];
+                currentCalculator = 'tffr';
+                preencherTabelaFatores();
+            }
+        });
+    </script>
+</body>
+</html>
