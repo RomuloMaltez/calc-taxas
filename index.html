@@ -72,6 +72,31 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
+        .calc-button.calculando {
+            background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
+            transform: scale(0.98);
+            cursor: wait;
+        }
+
+        .calc-button.calculando::after {
+            content: " ⏳";
+        }
+
+        .result-box.sucesso {
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .nav-button.active {
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
         }
@@ -169,6 +194,34 @@
             margin-bottom: 8px;
             font-weight: bold;
             color: #2d3748;
+        }
+
+        .logradouro-item input:disabled,
+        .veiculo-item input:disabled,
+        .publicidade-item input:disabled {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
+            border-color: #e9ecef;
+        }
+
+        .logradouro-item,
+        .veiculo-item,
+        .publicidade-item {
+            transition: all 0.2s ease;
+        }
+
+        .item-selecionado {
+            background: linear-gradient(135deg, #e6fffa 0%, #f0fff4 100%) !important;
+            border-color: #38b2ac !important;
+            box-shadow: 0 2px 8px rgba(56, 178, 172, 0.2);
+        }
+
+        .form-group input:disabled,
+        .form-group select:disabled {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
         }
 
         .form-group input,
@@ -336,15 +389,13 @@
             <button class="nav-button" onclick="showSection('relatorios', this)">📊 Relatórios</button>
         </div>
 
-        <!-- Seção Principal -->
         <div id="home-section" class="section">
             <h2 style="color: #5a67d8; margin-bottom: 20px; text-align: center;">
-                🏛️ Escolha a Calculadora Desejada
+                🏛️ Escolha a Calculadora Desejada (7 Disponíveis)
             </h2>
             
             <div class="tip-box">
-                <strong>Como usar:</strong> Escolha a taxa que você precisa calcular. Atualmente, somente a Calculadora de TFFR está disponível. 
-                As demais calculadoras serão implementadas em breve.
+                <strong>Como usar:</strong> Escolha a taxa que você precisa calcular. As demais calculadoras serão implementadas em breve.
             </div>
 
             <div style="background: #e6fffa; border: 1px solid #4fd1c7; border-radius: 8px; padding: 15px; margin: 20px 0; border-left: 4px solid #38b2ac; color: #2d3748;">
@@ -360,28 +411,28 @@
                     <div class="calculadora-status">✅ Disponível - Clique para calcular</div>
                 </div>
                 
-                <div class="calculadora-card em-breve">
+                <div class="calculadora-card implementada" onclick="selectCalculadora('publicidade')">
                     <span class="calculadora-icon">📺</span>
                     <div class="calculadora-title">Taxa de Fiscalização de Exposição de Publicidade</div>
-                    <div class="calculadora-status">🚧 Em breve</div>
+                    <div class="calculadora-status">✅ Disponível - Clique para calcular</div>
                 </div>
                 
-                <div class="calculadora-card em-breve">
+                <div class="calculadora-card implementada" onclick="selectCalculadora('logradouro')">
                     <span class="calculadora-icon">🛣️</span>
                     <div class="calculadora-title">Taxa de Fiscalização de Atividades em Logradouro Público</div>
-                    <div class="calculadora-status">🚧 Em breve</div>
+                    <div class="calculadora-status">✅ Disponível - Clique para calcular</div>
                 </div>
                 
-                <div class="calculadora-card em-breve">
+                <div class="calculadora-card implementada" onclick="selectCalculadora('sanitaria')">
                     <span class="calculadora-icon">🏥</span>
                     <div class="calculadora-title">Taxa de Fiscalização Sanitária</div>
-                    <div class="calculadora-status">🚧 Em breve</div>
+                    <div class="calculadora-status">✅ Disponível - Clique para calcular</div>
                 </div>
                 
-                <div class="calculadora-card em-breve">
+                <div class="calculadora-card implementada" onclick="selectCalculadora('ambientalFiscalizacao')">
                     <span class="calculadora-icon">🌱</span>
                     <div class="calculadora-title">Taxa de Fiscalização Ambiental</div>
-                    <div class="calculadora-status">🚧 Em breve</div>
+                    <div class="calculadora-status">✅ Disponível - Clique para calcular</div>
                 </div>
                 
                 <div class="calculadora-card em-breve">
@@ -393,10 +444,10 @@
 
             <h3 style="color: #2d3748; margin: 30px 0 15px 0;">📄 Taxas de Licença</h3>
             <div class="calculadoras-grid">
-                <div class="calculadora-card em-breve">
+                <div class="calculadora-card implementada" onclick="selectCalculadora('localizacao')">
                     <span class="calculadora-icon">📍</span>
                     <div class="calculadora-title">Taxa de Licença de Localização de Atividades</div>
-                    <div class="calculadora-status">🚧 Em breve</div>
+                    <div class="calculadora-status">✅ Disponível - Clique para calcular</div>
                 </div>
                 
                 <div class="calculadora-card em-breve">
@@ -405,10 +456,10 @@
                     <div class="calculadora-status">🚧 Em breve</div>
                 </div>
                 
-                <div class="calculadora-card em-breve">
+                <div class="calculadora-card implementada" onclick="selectCalculadora('publicidade')">
                     <span class="calculadora-icon">📢</span>
                     <div class="calculadora-title">Taxa de Licença de Anúncios Publicitários</div>
-                    <div class="calculadora-status">🚧 Em breve</div>
+                    <div class="calculadora-status">✅ Disponível - Clique para calcular</div>
                 </div>
                 
                 <div class="calculadora-card em-breve">
@@ -417,16 +468,16 @@
                     <div class="calculadora-status">🚧 Em breve</div>
                 </div>
                 
-                <div class="calculadora-card em-breve">
+                <div class="calculadora-card implementada" onclick="selectCalculadora('sanitaria')">
                     <span class="calculadora-icon">🧪</span>
                     <div class="calculadora-title">Taxa de Licença Sanitária</div>
-                    <div class="calculadora-status">🚧 Em breve</div>
+                    <div class="calculadora-status">✅ Disponível - Clique para calcular</div>
                 </div>
                 
-                <div class="calculadora-card em-breve">
+                <div class="calculadora-card implementada" onclick="selectCalculadora('ambientalLicenca')">
                     <span class="calculadora-icon">🌿</span>
                     <div class="calculadora-title">Taxa de Licença Ambiental</div>
-                    <div class="calculadora-status">🚧 Em breve</div>
+                    <div class="calculadora-status">✅ Disponível - Clique para calcular</div>
                 </div>
                 
                 <div class="calculadora-card em-breve">
@@ -452,10 +503,8 @@
             </div>
         </div>
 
-        <!-- Seção Calculadora -->
         <div id="calculator-section" class="section hidden">
-            <!-- Calculadora TFFR -->
-            <div id="tffr-calculator" class="calculator-form">
+            <div id="tffr-calculator" class="calculator-form hidden">
                 <h2 style="color: #5a67d8; margin-bottom: 20px;">
                     🏢 Calculadora TFFR - Taxa de Fiscalização do Funcionamento Regular
                 </h2>
@@ -477,7 +526,11 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="upf-value">Valor da UPF (R$)</label>
-                        <input type="number" id="upf-value" step="0.01" placeholder="Ex: 100.00">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="number" id="upf-value" class="upf-input" step="0.01" value="103.67" disabled>
+                            <input type="checkbox" id="alterar-upf-tffr" class="alterar-upf-checkbox" data-target-input="upf-value" style="width: auto;">
+                            <label for="alterar-upf-tffr" style="margin: 0; font-weight: normal;">Alterar</label>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -501,7 +554,7 @@
                     </div>
                 </div>
 
-                <h3 style="color: #2d3748; margin: 20px 0 10px 0;">📏 Áreas do Estabelecimento</h3>
+                <h3 style="color: #2d3748; margin: 20px 0 10px 0;">  Áreas do Estabelecimento</h3>
                 
                 <div style="background: #e6fffa; border: 1px solid #4fd1c7; border-radius: 8px; padding: 15px; margin-bottom: 20px; border-left: 4px solid #38b2ac; color: #2d3748;">
                     <strong>📋 Como preencher as áreas:</strong><br>
@@ -537,10 +590,8 @@
                 </div>
 
                 <div id="tffr-result" class="result-box">
-                    <!-- Resultado será inserido aqui -->
-                </div>
+                    </div>
 
-                <!-- Tabela de Fatores de Atividade -->
                 <div style="margin-top: 30px;">
                     <h3 style="color: #2d3748; margin-bottom: 15px;">📊 Tabela de Fatores de Atividade</h3>
                     <div style="overflow-x: auto;">
@@ -553,15 +604,876 @@
                                 </tr>
                             </thead>
                             <tbody id="factor-table-body">
-                                <!-- Tabela será preenchida pelo JavaScript -->
-                            </tbody>
+                                </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
+            <div id="localizacao-calculator" class="calculator-form hidden">
+                <h2 style="color: #5a67d8; margin-bottom: 20px;">
+                    📍 Calculadora Taxa de Licença de Localização de Atividades
+                </h2>
+                
+                <div style="background: #f7fafc; border: 2px solid #9f7aea; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                    <div style="color: #2d3748; margin-bottom: 10px;"><strong>📋 Sobre esta Taxa:</strong></div>
+                    <div style="color: #4a5568; line-height: 1.6;">
+                        <strong>Valor:</strong> 6 UPF (valor fixo)<br>
+                        <strong>Quando é devida:</strong> Para atividades econômicas com estabelecimento físico de funcionamento<br>
+                        <strong>Quando NÃO é devida:</strong> Atividades porta-a-porta, prestação de serviços no domicílio do cliente, atividades 100% online sem estabelecimento físico<br>
+                        <strong>Periodicidade:</strong> Paga uma única vez até que a empresa mude de endereço
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="upf-localizacao">Valor da UPF (R$)</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="number" id="upf-localizacao" class="upf-input" step="0.01" value="103.67" disabled>
+                            <input type="checkbox" id="alterar-upf-localizacao" class="alterar-upf-checkbox" data-target-input="upf-localizacao" style="width: auto;">
+                            <label for="alterar-upf-localizacao" style="margin: 0; font-weight: normal;">Alterar</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nome-estabelecimento-localizacao">Nome do Estabelecimento</label>
+                        <input type="text" id="nome-estabelecimento-localizacao" placeholder="Ex: Loja Exemplo Ltda">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="endereco-localizacao">Endereço do Estabelecimento</label>
+                    <input type="text" id="endereco-localizacao" placeholder="Ex: Rua Principal, 123 - Centro">
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo-atividade">Tipo de Atividade</label>
+                    <select id="tipo-atividade">
+                        <option value="">Selecione...</option>
+                        <option value="fisica">Atividade com estabelecimento físico (SUJEITA à taxa)</option>
+                        <option value="nao-fisica">Atividade sem estabelecimento físico (NÃO sujeita à taxa)</option>
+                    </select>
+                </div>
+
+                <div id="info-nao-sujeita" style="background: #e6fffa; border: 1px solid #4fd1c7; border-radius: 8px; padding: 15px; margin: 20px 0; border-left: 4px solid #38b2ac; color: #2d3748; display: none;">
+                    <strong>ℹ️ Informação:</strong> Esta atividade NÃO está sujeita à Taxa de Licença de Localização, pois não possui estabelecimento físico de funcionamento.
+                </div>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="calc-button" onclick="calcularLocalizacao()">🧮 Calcular Taxa</button>
+                    <button class="calc-button" style="background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);" onclick="limparFormularioLocalizacao()">🔄 Limpar</button>
+                </div>
+
+                <div id="localizacao-result" class="result-box">
+                    </div>
+            </div>
+
+            <div id="publicidade-calculator" class="calculator-form hidden">
+                <h2 style="color: #5a67d8; margin-bottom: 20px;">
+                    📢 Calculadora de Taxas de Publicidade
+                </h2>
+                
+                <div style="background: #f7fafc; border: 2px solid #9f7aea; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                    <div style="color: #2d3748; margin-bottom: 10px;"><strong>📋 Sobre estas Taxas:</strong></div>
+                    <div style="color: #4a5568; line-height: 1.6;">
+                        <strong>Taxa de Autorização:</strong> 1 UPF - Paga uma única vez para autorizar qualquer modalidade de engenho publicitário<br>
+                        <strong>Taxa de Fiscalização:</strong> Valores variados conforme o tipo de publicidade - Periodicidade anual ou por evento
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="upf-publicidade">Valor da UPF (R$)</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="number" id="upf-publicidade" class="upf-input" step="0.01" value="103.67" disabled>
+                            <input type="checkbox" id="alterar-upf-publicidade" class="alterar-upf-checkbox" data-target-input="upf-publicidade" style="width: auto;">
+                            <label for="alterar-upf-publicidade" style="margin: 0; font-weight: normal;">Alterar</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nome-estabelecimento-publicidade">Nome do Estabelecimento</label>
+                        <input type="text" id="nome-estabelecimento-publicidade" placeholder="Ex: Loja Exemplo Ltda">
+                    </div>
+                </div>
+
+                <h3 style="color: #2d3748; margin: 20px 0 10px 0;">📋 Taxa de Autorização de Publicidade</h3>
+                <div class="form-group">
+                    <input type="checkbox" id="taxa-autorizacao" style="margin-right: 10px;">
+                    <label for="taxa-autorizacao" style="display: inline;">Incluir Taxa de Autorização de Publicidade (1 UPF - Única)</label>
+                </div>
+
+                <h3 style="color: #2d3748; margin: 20px 0 10px 0;">📊 Taxas de Fiscalização de Publicidade</h3>
+                
+                <div id="tipos-publicidade">
+                    <div class="publicidade-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                        <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                            <input type="checkbox" id="tipo-2-1">
+                            <label for="tipo-2-1">Letreiros na parte externa dos edifícios</label>
+                            <input type="number" id="area-2-1" placeholder="m²" step="0.01" style="width: 80px;">
+                            <span style="font-weight: bold;">1 UPF/m²/ano</span>
+                        </div>
+                    </div>
+
+                    <div class="publicidade-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                        <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                            <input type="checkbox" id="tipo-2-2">
+                            <label for="tipo-2-2">Veículo de transporte (interna/externa)</label>
+                            <input type="number" id="area-2-2" placeholder="m²" step="0.01" style="width: 80px;">
+                            <span style="font-weight: bold;">1,5 UPF/m²/ano</span>
+                        </div>
+                    </div>
+
+                    <div class="publicidade-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                        <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                            <input type="checkbox" id="tipo-2-3">
+                            <label for="tipo-2-3">Dispositivo televisível ou tecnologia similar</label>
+                            <input type="number" id="area-2-3" placeholder="m²" step="0.01" style="width: 80px;">
+                            <span style="font-weight: bold;">1 UPF/m²/ano</span>
+                        </div>
+                    </div>
+
+                    <div class="publicidade-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                        <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                            <input type="checkbox" id="tipo-2-4">
+                            <label for="tipo-2-4">Condução por pessoas em vias públicas</label>
+                            <input type="number" id="qtd-2-4" placeholder="Qtd" step="1" style="width: 80px;">
+                            <span style="font-weight: bold;">1 UPF/unid/ano</span>
+                        </div>
+                    </div>
+
+                    <div class="publicidade-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                        <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                            <input type="checkbox" id="tipo-2-5">
+                            <label for="tipo-2-5">Faixa exposta por tempo determinado</label>
+                            <input type="number" id="area-2-5" placeholder="m²" step="0.01" style="width: 80px;">
+                            <span style="font-weight: bold;">0,1 UPF/m²/evento</span>
+                        </div>
+                    </div>
+
+                    <div class="publicidade-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                        <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                            <input type="checkbox" id="tipo-2-6">
+                            <label for="tipo-2-6">Flâmulas e bandeirolas (até 1m²)</label>
+                            <input type="number" id="qtd-2-6" placeholder="Qtd" step="1" style="width: 80px;">
+                            <span style="font-weight: bold;">1 UPF/evento</span>
+                        </div>
+                    </div>
+
+                    <div class="publicidade-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                        <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                            <input type="checkbox" id="tipo-2-7">
+                            <label for="tipo-2-7">Placas indicativas de atividades</label>
+                            <input type="number" id="area-2-7" placeholder="m²" step="0.01" style="width: 80px;">
+                            <span style="font-weight: bold;">1 UPF/m²/ano</span>
+                        </div>
+                    </div>
+
+                    <div class="publicidade-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                        <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                            <input type="checkbox" id="tipo-2-8">
+                            <label for="tipo-2-8">Totem publicitário</label>
+                            <input type="number" id="area-2-8" placeholder="m²" step="0.01" style="width: 80px;">
+                            <span style="font-weight: bold;">1,5 UPF/m²/ano</span>
+                        </div>
+                    </div>
+
+                    <div class="publicidade-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                        <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                            <input type="checkbox" id="tipo-2-9">
+                            <label for="tipo-2-9">Dispositivo inflável</label>
+                            <input type="number" id="qtd-2-9" placeholder="Qtd" step="1" style="width: 80px;">
+                            <span style="font-weight: bold;">1 UPF/unid/evento</span>
+                        </div>
+                    </div>
+
+                    <div class="publicidade-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                        <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                            <input type="checkbox" id="tipo-2-10">
+                            <label for="tipo-2-10">Propaganda móvel sonora</label>
+                            <input type="number" id="qtd-2-10" placeholder="Qtd" step="1" style="width: 80px;">
+                            <span style="font-weight: bold;">2 UPF/unid/ano</span>
+                        </div>
+                    </div>
+
+                    <div class="publicidade-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                        <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                            <input type="checkbox" id="tipo-2-11">
+                            <label for="tipo-2-11">Outdoor</label>
+                            <input type="number" id="qtd-2-11" placeholder="Qtd" step="1" style="width: 80px;">
+                            <span style="font-weight: bold;">2 UPF/unid/ano</span>
+                        </div>
+                    </div>
+
+                    <div class="publicidade-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                        <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                            <input type="checkbox" id="tipo-2-12">
+                            <label for="tipo-2-12">Painel luminoso ou iluminado</label>
+                            <input type="number" id="area-2-12" placeholder="m²" step="0.01" style="width: 80px;">
+                            <span style="font-weight: bold;">0,2 UPF/m²/ano</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="calc-button" onclick="calcularPublicidade()">🧮 Calcular Taxas</button>
+                    <button class="calc-button" style="background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);" onclick="limparFormularioPublicidade()">🔄 Limpar</button>
+                </div>
+
+                <div id="publicidade-result" class="result-box">
+                    </div>
+            </div>
+
+            <div id="logradouro-calculator" class="calculator-form hidden">
+                <h2 style="color: #5a67d8; margin-bottom: 20px;">
+                    🛣️ Calculadora de Taxas de Uso de Logradouro Público
+                </h2>
+                
+                <div style="background: #f7fafc; border: 2px solid #9f7aea; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                    <div style="color: #2d3748; margin-bottom: 10px;"><strong>📋 Sobre estas Taxas:</strong></div>
+                    <div style="color: #4a5568; line-height: 1.6;">
+                        <strong>Taxa de Autorização:</strong> 0,5 UPF - Paga uma única vez para qualquer modalidade de uso<br>
+                        <strong>Taxa de Fiscalização:</strong> Valores variados conforme o tipo de uso e periodicidade (anual, mensal, diária ou por evento)
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="upf-logradouro">Valor da UPF (R$)</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="number" id="upf-logradouro" class="upf-input" step="0.01" value="103.67" disabled>
+                            <input type="checkbox" id="alterar-upf-logradouro" class="alterar-upf-checkbox" data-target-input="upf-logradouro" style="width: auto;">
+                            <label for="alterar-upf-logradouro" style="margin: 0; font-weight: normal;">Alterar</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nome-estabelecimento-logradouro">Nome do Estabelecimento</label>
+                        <input type="text" id="nome-estabelecimento-logradouro" placeholder="Ex: Loja Exemplo Ltda">
+                    </div>
+                </div>
+
+                <h3 style="color: #2d3748; margin: 20px 0 10px 0;">📋 Taxa de Autorização de Uso</h3>
+                <div class="form-group">
+                    <input type="checkbox" id="taxa-autorizacao-logradouro" style="margin-right: 10px;">
+                    <label for="taxa-autorizacao-logradouro" style="display: inline;">Incluir Taxa de Autorização de Uso (0,5 UPF - Única)</label>
+                </div>
+
+                <h3 style="color: #2d3748; margin: 20px 0 10px 0;">📊 Taxas de Fiscalização de Uso</h3>
+                
+                <div id="categorias-logradouro">
+                    <div style="background: #e6fffa; border: 1px solid #4fd1c7; border-radius: 8px; padding: 15px; margin: 15px 0;">
+                        <h4 style="color: #2d3748; margin-bottom: 10px;">🚚 Atividades Itinerantes e Estacionadas</h4>
+                        
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-1">
+                                <label for="item-2-1">Itinerante em Local Franqueado ao Público</label>
+                                <span style="width: 80px;"></span>
+                                <span style="font-weight: bold;">2 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-1-1">
+                                <label for="item-2-1-1">Itinerante em eventos esporádicos</label>
+                                <input type="number" id="dias-2-1-1" placeholder="Dias" step="1" style="width: 80px;">
+                                <span style="font-weight: bold;">0,0056 UPF/dia</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-1-2">
+                                <label for="item-2-1-2">Estacionado Tipo Guloseimas (Pequeno Porte)</label>
+                                <span style="width: 80px;"></span>
+                                <span style="font-weight: bold;">3 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-1-2-1">
+                                <label for="item-2-1-2-1">Guloseimas - eventos esporádicos</label>
+                                <input type="number" id="dias-2-1-2-1" placeholder="Dias" step="1" style="width: 80px;">
+                                <span style="font-weight: bold;">0,0083 UPF/dia</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-1-3">
+                                <label for="item-2-1-3">Estacionado Comércio em Geral</label>
+                                <span style="width: 80px;"></span>
+                                <span style="font-weight: bold;">5 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-1-3-1">
+                                <label for="item-2-1-3-1">Comércio Geral - eventos esporádicos</label>
+                                <input type="number" id="dias-2-1-3-1" placeholder="Dias" step="1" style="width: 80px;">
+                                <span style="font-weight: bold;">0,014 UPF/dia</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-1-4">
+                                <label for="item-2-1-4">Estacionado Tipo Banca até 2m²</label>
+                                <span style="width: 80px;"></span>
+                                <span style="font-weight: bold;">0,5 UPF/mês</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-1-4-1">
+                                <label for="item-2-1-4-1">Banca até 2m² - eventos esporádicos</label>
+                                <input type="number" id="dias-2-1-4-1" placeholder="Dias" step="1" style="width: 80px;">
+                                <span style="font-weight: bold;">0,0014 UPF/dia</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-1-5">
+                                <label for="item-2-1-5">Área privada com barraca</label>
+                                <input type="number" id="area-2-1-5" placeholder="m²" step="0.01" style="width: 80px;">
+                                <span style="font-weight: bold;">1,0 UPF/m²/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-1-5-1">
+                                <label for="item-2-1-5-1">Barraca - eventos esporádicos</label>
+                                <div style="display: flex; gap: 5px;">
+                                    <input type="number" id="area-2-1-5-1" placeholder="m²" step="0.01" style="width: 40px;">
+                                    <input type="number" id="dias-2-1-5-1" placeholder="Dias" step="1" style="width: 40px;">
+                                </div>
+                                <span style="font-weight: bold;">0,003 UPF/m²/dia</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-1-6">
+                                <label for="item-2-1-6">Adicional Mesas e Cadeiras</label>
+                                <div style="display: flex; gap: 5px;">
+                                    <input type="number" id="area-2-1-6" placeholder="m²" step="0.01" style="width: 40px;">
+                                    <input type="number" id="dias-2-1-6" placeholder="Dias" step="1" style="width: 40px;">
+                                </div>
+                                <span style="font-weight: bold;">0,005 UPF/m²/dia</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #fff5e6; border: 1px solid #fed7aa; border-radius: 8px; padding: 15px; margin: 15px 0;">
+                        <h4 style="color: #2d3748; margin-bottom: 10px;">🏪 Feiras e Atividades Comerciais</h4>
+                        
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-2-1">
+                                <label for="item-2-2-1">Feiras Populares (autorização legal)</label>
+                                <span style="width: 80px;"></span>
+                                <span style="font-weight: bold;">5 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-2-2">
+                                <label for="item-2-2-2">Feiras livres itinerantes</label>
+                                <span style="width: 80px;"></span>
+                                <span style="font-weight: bold;">5 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-2-3">
+                                <label for="item-2-2-3">Atividades comerciais precárias</label>
+                                <div style="display: flex; gap: 5px;">
+                                    <input type="number" id="area-2-2-3" placeholder="m²" step="0.01" style="width: 40px;">
+                                    <input type="number" id="dias-2-2-3" placeholder="Dias" step="1" style="width: 40px;">
+                                </div>
+                                <span style="font-weight: bold;">0,005 UPF/m²/dia</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-2-4">
+                                <label for="item-2-2-4">Festa Popular, Carnaval</label>
+                                <div style="display: flex; gap: 5px;">
+                                    <input type="number" id="area-2-2-4" placeholder="m²" step="0.01" style="width: 40px;">
+                                    <input type="number" id="dias-2-2-4" placeholder="Dias" step="1" style="width: 40px;">
+                                </div>
+                                <span style="font-weight: bold;">0,002 UPF/m²/dia</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-2-5">
+                                <label for="item-2-2-5">Feriados Religiosos, Natal, Ano-novo</label>
+                                <div style="display: flex; gap: 5px;">
+                                    <input type="number" id="area-2-2-5" placeholder="m²" step="0.01" style="width: 40px;">
+                                    <input type="number" id="dias-2-2-5" placeholder="Dias" step="1" style="width: 40px;">
+                                </div>
+                                <span style="font-weight: bold;">0,001 UPF/m²/dia</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f0fff4; border: 1px solid #9ae6b4; border-radius: 8px; padding: 15px; margin: 15px 0;">
+                        <h4 style="color: #2d3748; margin-bottom: 10px;">🪑 Mesas e Cadeiras na Calçada</h4>
+                        
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-3">
+                                <label for="item-2-3">Ocupação de Mesas e Cadeiras na Calçada</label>
+                                <input type="number" id="area-2-3" placeholder="m²" step="0.01" style="width: 80px;">
+                                <span style="font-weight: bold;">0,10 UPF/m²/ano</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #fef5e7; border: 1px solid #fed7aa; border-radius: 8px; padding: 15px; margin: 15px 0;">
+                        <h4 style="color: #2d3748; margin-bottom: 10px;">🚐 Veículos Adaptados</h4>
+                        
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-4-1">
+                                <label for="item-2-4-1">Veículo Adaptado</label>
+                                <input type="number" id="area-2-4-1" placeholder="m²" step="0.01" style="width: 80px;">
+                                <span style="font-weight: bold;">1,20 UPF/m²/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-4-1-1">
+                                <label for="item-2-4-1-1">Veículo - eventos esporádicos</label>
+                                <div style="display: flex; gap: 5px;">
+                                    <input type="number" id="area-2-4-1-1" placeholder="m²" step="0.01" style="width: 40px;">
+                                    <input type="number" id="dias-2-4-1-1" placeholder="Dias" step="1" style="width: 40px;">
+                                </div>
+                                <span style="font-weight: bold;">0,0033 UPF/m²/dia</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #e6fffa; border: 1px solid #4fd1c7; border-radius: 8px; padding: 15px; margin: 15px 0;">
+                        <h4 style="color: #2d3748; margin-bottom: 10px;">📰 Outros Usos</h4>
+                        
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-5">
+                                <label for="item-2-5">Banca de Jornal e Revistas</label>
+                                <input type="number" id="area-2-5" placeholder="m²" step="0.01" style="width: 80px;">
+                                <span style="font-weight: bold;">0,50 UPF/m²/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-6-1">
+                                <label for="item-2-6-1">Comércio em estrutura aprovada</label>
+                                <input type="number" id="area-2-6-1" placeholder="m²" step="0.01" style="width: 80px;">
+                                <span style="font-weight: bold;">1,50 UPF/m²/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="logradouro-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="item-2-6-3">
+                                <label for="item-2-6-3">Máquina de Sorvete e similares</label>
+                                <span style="width: 80px;"></span>
+                                <span style="font-weight: bold;">1,50 UPF/ano</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="calc-button" onclick="calcularLogradouro()">🧮 Calcular Taxas</button>
+                    <button class="calc-button" style="background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);" onclick="limparFormularioLogradouro()">🔄 Limpar</button>
+                </div>
+
+                <div id="logradouro-result" class="result-box">
+                    </div>
+            </div>
+
+            <div id="sanitaria-calculator" class="calculator-form hidden">
+                <h2 style="color: #5a67d8; margin-bottom: 20px;">
+                    🧪 Calculadora de Taxas Sanitárias
+                </h2>
+                
+                <div style="background: #f7fafc; border: 2px solid #9f7aea; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                    <div style="color: #2d3748; margin-bottom: 10px;"><strong>📋 Tipos de Taxas Sanitárias:</strong></div>
+                    <div style="color: #4a5568; line-height: 1.6;">
+                        <strong>Licença Sanitária:</strong> Taxa simples baseada na área do estabelecimento<br>
+                        <strong>Taxa de Fiscalização Sanitária (TFS):</strong> Cálculo complexo baseado em área × tempo de funcionamento × custo operacional<br>
+                        <strong>Inspeção de Veículos:</strong> Valores fixos por tipo de veículo<br>
+                        <strong>Outras modalidades:</strong> Eventos temporários, qualidade da água, ambulantes
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="upf-sanitaria">Valor da UPF (R$)</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="number" id="upf-sanitaria" class="upf-input" step="0.01" value="103.67" disabled>
+                            <input type="checkbox" id="alterar-upf-sanitaria" class="alterar-upf-checkbox" data-target-input="upf-sanitaria" style="width: auto;">
+                            <label for="alterar-upf-sanitaria" style="margin: 0; font-weight: normal;">Alterar</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nome-estabelecimento-sanitaria">Nome do Estabelecimento</label>
+                        <input type="text" id="nome-estabelecimento-sanitaria" placeholder="Ex: Restaurante Exemplo">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo-taxa-sanitaria">Tipo de Taxa Sanitária</label>
+                    <select id="tipo-taxa-sanitaria">
+                        <option value="">Selecione...</option>
+                        <option value="licenca">Licença Sanitária (por área)</option>
+                        <option value="fiscalizacao">Taxa de Fiscalização Sanitária - TFS (fórmula complexa)</option>
+                        <option value="veiculo">Inspeção Sanitária de Veículos</option>
+                        <option value="evento">Fiscalização para Evento Temporário</option>
+                        <option value="agua">Fiscalização da Qualidade da Água</option>
+                        <option value="ambulante">Autorização Sanitária para Ambulantes</option>
+                    </select>
+                </div>
+
+                <div id="secao-licenca" class="taxa-sanitaria-section" style="display: none;">
+                    <h3 style="color: #2d3748; margin: 20px 0 10px 0;">📏 Licença Sanitária</h3>
+                    <div class="form-group">
+                        <label for="area-licenca">Área do Estabelecimento (m²)</label>
+                        <input type="number" id="area-licenca" step="0.01" placeholder="Ex: 50">
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="checkbox" id="reinspecao-licenca" style="margin-right: 10px;">
+                        <label for="reinspecao-licenca" style="display: inline;">Incluir Reinspeção Sanitária (+1 UPF)</label>
+                    </div>
+                </div>
+
+                <div id="secao-fiscalizacao" class="taxa-sanitaria-section" style="display: none;">
+                    <h3 style="color: #2d3748; margin: 20px 0 10px 0;">🔍 Taxa de Fiscalização Sanitária (TFS)</h3>
+                    
+                    <div style="background: #e6fffa; border: 1px solid #4fd1c7; border-radius: 8px; padding: 15px; margin: 15px 0; border-left: 4px solid #38b2ac; color: #2d3748;">
+                        <strong>🧮 Fórmula TFS:</strong> UPF por área × Tempo de funcionamento (%) × Custo operacional<br>
+                        <small>Aplicável apenas para estabelecimentos de <strong>Risco Alto = 3</strong></small>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="area-tfs">Área do Estabelecimento (m²)</label>
+                            <input type="number" id="area-tfs" step="0.01" placeholder="Ex: 50">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tempo-funcionamento-tfs">Tempo de Funcionamento Diário</label>
+                            <select id="tempo-funcionamento-tfs">
+                                <option value="">Selecione...</option>
+                                <option value="0.25">Até 8h diárias (25%)</option>
+                                <option value="0.50">8h-12h diárias (50%)</option>
+                                <option value="0.75">12h-18h diárias (75%)</option>
+                                <option value="1.00">18h-24h diárias (100%)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="secao-veiculo" class="taxa-sanitaria-section" style="display: none;">
+                    <h3 style="color: #2d3748; margin: 20px 0 10px 0;">🚑 Inspeção Sanitária de Veículos</h3>
+                    
+                    <div id="tipos-veiculos">
+                        <div class="veiculo-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="veiculo-ambulancia">
+                                <label for="veiculo-ambulancia">Ambulância</label>
+                                <input type="number" id="qtd-ambulancia" placeholder="Qtd" step="1" style="width: 60px;">
+                                <span style="font-weight: bold;">3,0 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="veiculo-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="veiculo-ambulancia-vet">
+                                <label for="veiculo-ambulancia-vet">Ambulância veterinária</label>
+                                <input type="number" id="qtd-ambulancia-vet" placeholder="Qtd" step="1" style="width: 60px;">
+                                <span style="font-weight: bold;">2,0 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="veiculo-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="veiculo-aviao-uti">
+                                <label for="veiculo-aviao-uti">Avião UTI</label>
+                                <input type="number" id="qtd-aviao-uti" placeholder="Qtd" step="1" style="width: 60px;">
+                                <span style="font-weight: bold;">6,0 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="veiculo-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="veiculo-bau-engate">
+                                <label for="veiculo-bau-engate">Baú com engate (motos/carros)</label>
+                                <input type="number" id="qtd-bau-engate" placeholder="Qtd" step="1" style="width: 60px;">
+                                <span style="font-weight: bold;">0,5 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="veiculo-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="veiculo-caminhao-bau">
+                                <label for="veiculo-caminhao-bau">Caminhão baú lonado</label>
+                                <input type="number" id="qtd-caminhao-bau" placeholder="Qtd" step="1" style="width: 60px;">
+                                <span style="font-weight: bold;">1,0 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="veiculo-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="veiculo-bau-isotermico">
+                                <label for="veiculo-bau-isotermico">Caminhão baú isotérmico</label>
+                                <input type="number" id="qtd-bau-isotermico" placeholder="Qtd" step="1" style="width: 60px;">
+                                <span style="font-weight: bold;">2,0 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="veiculo-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="veiculo-pipa">
+                                <label for="veiculo-pipa">Caminhão pipa (transporte água)</label>
+                                <input type="number" id="qtd-pipa" placeholder="Qtd" step="1" style="width: 60px;">
+                                <span style="font-weight: bold;">2,0 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="veiculo-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="veiculo-limpa-fossa">
+                                <label for="veiculo-limpa-fossa">Caminhão limpa fossa</label>
+                                <input type="number" id="qtd-limpa-fossa" placeholder="Qtd" step="1" style="width: 60px;">
+                                <span style="font-weight: bold;">3,0 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="veiculo-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="veiculo-trailer">
+                                <label for="veiculo-trailer">Trailers</label>
+                                <input type="number" id="qtd-trailer" placeholder="Qtd" step="1" style="width: 60px;">
+                                <span style="font-weight: bold;">1,5 UPF/ano</span>
+                            </div>
+                        </div>
+
+                        <div class="veiculo-item" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                            <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px; align-items: center;">
+                                <input type="checkbox" id="veiculo-furgao">
+                                <label for="veiculo-furgao">Veículos furgões</label>
+                                <input type="number" id="qtd-furgao" placeholder="Qtd" step="1" style="width: 60px;">
+                                <span style="font-weight: bold;">2,0 UPF/ano</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="secao-evento" class="taxa-sanitaria-section" style="display: none;">
+                    <h3 style="color: #2d3748; margin: 20px 0 10px 0;">🎪 Fiscalização para Evento Temporário</h3>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="area-manipulacao">Área de Manipulação de Alimentos (m²)</label>
+                            <input type="number" id="area-manipulacao" step="0.01" placeholder="Ex: 15">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dias-evento">Número de Dias do Evento</label>
+                            <input type="number" id="dias-evento" step="1" placeholder="Ex: 3">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pontos-comercializacao">Pontos de Comercialização</label>
+                            <input type="number" id="pontos-comercializacao" step="1" placeholder="Ex: 2" value="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="secao-agua" class="taxa-sanitaria-section" style="display: none;">
+                    <h3 style="color: #2d3748; margin: 20px 0 10px 0;">💧 Fiscalização da Qualidade da Água</h3>
+                    
+                    <div class="form-group">
+                        <label for="unidades-habitacionais">Número de Unidades Habitacionais</label>
+                        <input type="number" id="unidades-habitacionais" step="1" placeholder="Ex: 50">
+                    </div>
+                </div>
+
+                <div id="secao-ambulante" class="taxa-sanitaria-section" style="display: none;">
+                    <h3 style="color: #2d3748; margin: 20px 0 10px 0;">🛒 Autorização Sanitária para Ambulantes</h3>
+                    
+                    <div style="background: #e6fffa; border: 1px solid #4fd1c7; border-radius: 8px; padding: 15px; margin: 15px 0; border-left: 4px solid #38b2ac; color: #2d3748;">
+                        <strong>📋 Valor fixo:</strong> 1,00 UPF por ano para balcões, mesas, barracas, carrinhos ou similares.
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="qtd-ambulantes">Quantidade de Estruturas Ambulantes</label>
+                        <input type="number" id="qtd-ambulantes" step="1" placeholder="Ex: 1" value="1">
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="calc-button" onclick="calcularSanitaria()">🧮 Calcular Taxa</button>
+                    <button class="calc-button" style="background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);" onclick="limparFormularioSanitaria()">🔄 Limpar</button>
+                </div>
+
+                <div id="sanitaria-result" class="result-box">
+                    </div>
+            </div>
+
+            <div id="ambientalFiscalizacao-calculator" class="calculator-form hidden">
+                <h2 style="color: #5a67d8; margin-bottom: 20px;">
+                    🌱 Calculadora de Taxa de Fiscalização Ambiental (ATM)
+                </h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="upf-ambiental-fiscalizacao">Valor da UPF (R$)</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="number" id="upf-ambiental-fiscalizacao" class="upf-input" step="0.01" value="103.67" disabled>
+                            <input type="checkbox" id="alterar-upf-ambiental-fiscalizacao" class="alterar-upf-checkbox" data-target-input="upf-ambiental-fiscalizacao" style="width: auto;">
+                            <label for="alterar-upf-ambiental-fiscalizacao" style="margin: 0; font-weight: normal;">Alterar</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nome-empreendimento-fiscalizacao">Nome do Empreendimento</label>
+                        <input type="text" id="nome-empreendimento-fiscalizacao" placeholder="Ex: Projeto Ambiental Exemplo">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="porte-fiscalizacao">Porte do Empreendimento</label>
+                    <select id="porte-fiscalizacao">
+                        <option value="">Selecione o Porte...</option>
+                        <option value="lapp">Pequeno Porte (LAPP)</option>
+                        <option value="lamp">Médio Porte (LAMP)</option>
+                        <option value="lagp">Grande Porte (LAGP)</option>
+                        <option value="laep">Porte Excepcional (LAEP)</option>
+                    </select>
+                </div>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="calc-button" onclick="calcularAmbientalFiscalizacao()">🧮 Calcular Taxa</button>
+                    <button class="calc-button" style="background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);" onclick="limparFormularioAmbientalFiscalizacao()">🔄 Limpar</button>
+                </div>
+
+                <div id="ambiental-fiscalizacao-result" class="result-box">
+                    </div>
+            </div>
+
+            <div id="ambientalLicenca-calculator" class="calculator-form hidden">
+                <h2 style="color: #5a67d8; margin-bottom: 20px;">
+                    🌿 Calculadora de Taxa de Licença Ambiental
+                </h2>
+
+                <div class="form-grid">
+                     <div class="form-group">
+                        <label for="upf-ambiental-licenca">Valor da UPF (R$)</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="number" id="upf-ambiental-licenca" class="upf-input" step="0.01" value="103.67" disabled>
+                            <input type="checkbox" id="alterar-upf-ambiental-licenca" class="alterar-upf-checkbox" data-target-input="upf-ambiental-licenca" style="width: auto;">
+                            <label for="alterar-upf-ambiental-licenca" style="margin: 0; font-weight: normal;">Alterar</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nome-empreendimento-licenca">Nome do Empreendimento</label>
+                        <input type="text" id="nome-empreendimento-licenca" placeholder="Ex: Usina Hidrelétrica Exemplo">
+                    </div>
+                </div>
+
+                <div style="background: #f0fff4; border: 1px solid #9ae6b4; border-radius: 8px; padding: 20px; margin: 20px 0;">
+                    <h3 style="color: #2d3748; margin-bottom: 15px;">📄 Licença Principal</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="tipo-licenca-ambiental">Tipo de Licença</label>
+                            <select id="tipo-licenca-ambiental">
+                                <option value="">Selecione...</option>
+                                <option value="lap">Licença Prévia (LAP)</option>
+                                <option value="lai">Licença de Instalação (LAI)</option>
+                                <option value="lao">Licença de Operação (LAO)</option>
+                                <option value="las">Licença Ambiental Simplificada (LAS)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="porte-licenca-ambiental">Porte do Empreendimento</label>
+                            <select id="porte-licenca-ambiental">
+                                <option value="">Selecione...</option>
+                                <option value="lapp">Pequeno Porte (LAPP)</option>
+                                <option value="lamp">Médio Porte (LAMP)</option>
+                                <option value="lagp">Grande Porte (LAGP)</option>
+                                <option value="laep">Porte Excepcional (LAEP)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #fef5e7; border: 1px solid #fed7aa; border-radius: 8px; padding: 20px; margin: 20px 0;">
+                    <h3 style="color: #2d3748; margin-bottom: 15px;">➕ Serviços Adicionais</h3>
+                    
+                    <div class="form-group">
+                        <input type="checkbox" id="incluir-eia-rima" style="margin-right: 10px;">
+                        <label for="incluir-eia-rima" style="display: inline;">Incluir Análise de Estudo de Impacto Ambiental (EIA/RIMA)</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" id="incluir-eiv-riv" style="margin-right: 10px;">
+                        <label for="incluir-eiv-riv" style="display: inline;">Incluir Análise de Estudo de Impacto de Vizinhança (EIV/RIV)</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="checkbox" id="incluir-certidao-viabilidade" style="margin-right: 10px;" onchange="toggleViabilidadePorte(this.checked)">
+                        <label for="incluir-certidao-viabilidade" style="display: inline;">Incluir Certidão de Viabilidade Ambiental</label>
+                    </div>
+                    <div id="porte-viabilidade-group" class="form-group hidden">
+                        <label for="porte-certidao-viabilidade">Porte da Certidão</label>
+                        <select id="porte-certidao-viabilidade">
+                            <option value="">Selecione...</option>
+                            <option value="minimo">Mínimo</option>
+                            <option value="pequeno">Pequeno</option>
+                            <option value="medio">Médio</option>
+                            <option value="grande">Grande</option>
+                            <option value="excepcional">Excepcional</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" id="incluir-cadastro-simplificado" style="margin-right: 10px;">
+                        <label for="incluir-cadastro-simplificado" style="display: inline;">Incluir Cadastro Ambiental Simplificado</label>
+                    </div>
+                </div>
+
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="calc-button" onclick="calcularAmbientalLicenca()">🧮 Calcular Taxas</button>
+                    <button class="calc-button" style="background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);" onclick="limparFormularioAmbientalLicenca()">🔄 Limpar</button>
+                </div>
+
+                <div id="ambiental-licenca-result" class="result-box">
+                    </div>
+            </div>
+
         </div>
 
-        <!-- Seção Relatórios -->
         <div id="relatorios-section" class="section hidden">
             <h2 style="color: #5a67d8; margin-bottom: 20px;">
                 📊 Relatórios de Cálculos Realizados
@@ -594,6 +1506,32 @@
         // Estado global da aplicação (inicialização segura)
         let relatorios = [];
         let currentCalculator = 'tffr';
+
+        // --- BASES DE DADOS DAS TAXAS ---
+        const taxasLicencaAmbiental = { 
+            lapp: { lap: 1, lai: 2, lao: 2 },
+            lamp: { lap: 3, lai: 6, lao: 6 },
+            lagp: { lap: 12, lai: 24, lao: 24 },
+            laep: { lap: 12, lai: 24, lao: 24 },
+            las: { lai: 3 } 
+        };
+
+        const taxasAnaliseEstudo = { 
+            eia_rima: { lapp: 1, lamp: 3, lagp: 5, laep: 10 },
+            eiv_riv: { lapp: 1, lamp: 3, lagp: 5, laep: 10 }
+        };
+
+        const taxasDiversasAmbiental = { 
+            certidaoViabilidade: { minimo: 1, pequeno: 2, medio: 3.5, grande: 4, excepcional: 6 },
+            cadastroSimplificado: 0.32
+        };
+
+        const taxasFiscalizacaoAmbiental = { 
+            lapp: 3.0,
+            lamp: 4.5,
+            lagp: 6.0,
+            laep: 10.0
+        };
         
         // Função para salvar relatórios (simulando localStorage)
         function salvarRelatorios() {
@@ -614,119 +1552,79 @@
 
         // Dados da tabela de fatores de atividade
         const fatoresAtividade = [
-            { categoria: "PEQUENA ATIVIDADE", area: "Até 30m²", fator: 1.00 },
-            { categoria: "MÉDIA ATIVIDADE", area: "31-40m²", fator: 1.10 },
-            { categoria: "", area: "41-50m²", fator: 1.20 },
-            { categoria: "", area: "51-60m²", fator: 1.30 },
-            { categoria: "", area: "61-70m²", fator: 1.40 },
-            { categoria: "", area: "71-80m²", fator: 1.50 },
-            { categoria: "", area: "81-90m²", fator: 1.60 },
-            { categoria: "", area: "91-100m²", fator: 1.70 },
-            { categoria: "GRANDE ATIVIDADE", area: "101-110m²", fator: 2.00 },
-            { categoria: "", area: "111-120m²", fator: 2.10 },
-            { categoria: "", area: "121-130m²", fator: 2.20 },
-            { categoria: "", area: "131-140m²", fator: 2.30 },
-            { categoria: "", area: "141-150m²", fator: 2.50 },
-            { categoria: "", area: "151-200m²", fator: 3.00 },
-            { categoria: "", area: "201-250m²", fator: 3.80 },
-            { categoria: "", area: "251-300m²", fator: 4.60 },
-            { categoria: "", area: "301-350m²", fator: 5.40 },
-            { categoria: "", area: "351-400m²", fator: 6.20 },
-            { categoria: "", area: "401-450m²", fator: 7.00 },
-            { categoria: "", area: "451-500m²", fator: 7.80 },
-            { categoria: "", area: "501-550m²", fator: 8.60 },
-            { categoria: "", area: "551-600m²", fator: 9.40 },
-            { categoria: "", area: "601-650m²", fator: 10.20 },
-            { categoria: "", area: "651-700m²", fator: 11.00 },
-            { categoria: "", area: "701-750m²", fator: 11.80 },
-            { categoria: "", area: "751-800m²", fator: 12.60 },
-            { categoria: "", area: "801-850m²", fator: 13.40 },
-            { categoria: "", area: "851-900m²", fator: 14.20 },
-            { categoria: "", area: "901-950m²", fator: 15.00 },
-            { categoria: "", area: "951-1.000m²", fator: 15.80 },
-            { categoria: "", area: "1.001-1.050m²", fator: 16.60 },
-            { categoria: "", area: "1.051-1.100m²", fator: 17.40 },
-            { categoria: "", area: "1.101-1.150m²", fator: 18.20 },
-            { categoria: "", area: "1.151-1.200m²", fator: 19.00 },
-            { categoria: "", area: "1.201-1.250m²", fator: 19.80 },
-            { categoria: "", area: "1.251-1.300m²", fator: 20.60 },
-            { categoria: "", area: "1.301-1.350m²", fator: 21.40 },
-            { categoria: "", area: "1.351-1.400m²", fator: 22.20 },
-            { categoria: "", area: "1.401-1.450m²", fator: 23.00 },
-            { categoria: "", area: "1.451-1.500m²", fator: 23.80 },
+            { categoria: "PEQUENA ATIVIDADE", area: "Até 30m²", fator: 1.00 }, { categoria: "MÉDIA ATIVIDADE", area: "31-40m²", fator: 1.10 },
+            { categoria: "", area: "41-50m²", fator: 1.20 }, { categoria: "", area: "51-60m²", fator: 1.30 },
+            { categoria: "", area: "61-70m²", fator: 1.40 }, { categoria: "", area: "71-80m²", fator: 1.50 },
+            { categoria: "", area: "81-90m²", fator: 1.60 }, { categoria: "", area: "91-100m²", fator: 1.70 },
+            { categoria: "GRANDE ATIVIDADE", area: "101-110m²", fator: 2.00 }, { categoria: "", area: "111-120m²", fator: 2.10 },
+            { categoria: "", area: "121-130m²", fator: 2.20 }, { categoria: "", area: "131-140m²", fator: 2.30 },
+            { categoria: "", area: "141-150m²", fator: 2.50 }, { categoria: "", area: "151-200m²", fator: 3.00 },
+            { categoria: "", area: "201-250m²", fator: 3.80 }, { categoria: "", area: "251-300m²", fator: 4.60 },
+            { categoria: "", area: "301-350m²", fator: 5.40 }, { categoria: "", area: "351-400m²", fator: 6.20 },
+            { categoria: "", area: "401-450m²", fator: 7.00 }, { categoria: "", area: "451-500m²", fator: 7.80 },
+            { categoria: "", area: "501-550m²", fator: 8.60 }, { categoria: "", area: "551-600m²", fator: 9.40 },
+            { categoria: "", area: "601-650m²", fator: 10.20 }, { categoria: "", area: "651-700m²", fator: 11.00 },
+            { categoria: "", area: "701-750m²", fator: 11.80 }, { categoria: "", area: "751-800m²", fator: 12.60 },
+            { categoria: "", area: "801-850m²", fator: 13.40 }, { categoria: "", area: "851-900m²", fator: 14.20 },
+            { categoria: "", area: "901-950m²", fator: 15.00 }, { categoria: "", area: "951-1.000m²", fator: 15.80 },
+            { categoria: "", area: "1.001-1.050m²", fator: 16.60 }, { categoria: "", area: "1.051-1.100m²", fator: 17.40 },
+            { categoria: "", area: "1.101-1.150m²", fator: 18.20 }, { categoria: "", area: "1.151-1.200m²", fator: 19.00 },
+            { categoria: "", area: "1.201-1.250m²", fator: 19.80 }, { categoria: "", area: "1.251-1.300m²", fator: 20.60 },
+            { categoria: "", area: "1.301-1.350m²", fator: 21.40 }, { categoria: "", area: "1.351-1.400m²", fator: 22.20 },
+            { categoria: "", area: "1.401-1.450m²", fator: 23.00 }, { categoria: "", area: "1.451-1.500m²", fator: 23.80 },
             { categoria: "", area: "Acima de 1.500m²", fator: "23,80 + (0,70 × cada 50m² extras)" }
         ];
 
         // Navegação entre seções
         function showSection(sectionName, buttonElement = null) {
-            // Esconder todas as seções
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            
-            // Remover classe active de todos os botões
-            document.querySelectorAll('.nav-button').forEach(button => {
-                button.classList.remove('active');
-            });
-            
-            // Mostrar seção selecionada
+            document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+            document.querySelectorAll('.nav-button').forEach(button => button.classList.remove('active'));
             document.getElementById(sectionName + '-section').classList.remove('hidden');
-            
-            // Adicionar classe active ao botão clicado
-            if (buttonElement) {
-                buttonElement.classList.add('active');
-            } else if (event && event.target) {
-                event.target.classList.add('active');
-            } else {
-                // Se não há botão específico, encontrar o botão correto
-                const buttons = document.querySelectorAll('.nav-button');
-                if (sectionName === 'home') buttons[0].classList.add('active');
-                else if (sectionName === 'calculator') buttons[1].classList.add('active');
-                else if (sectionName === 'relatorios') buttons[2].classList.add('active');
-            }
-            
-            // Atualizar relatórios se estiver na seção de relatórios
-            if (sectionName === 'relatorios') {
-                atualizarRelatorios();
-            }
+            if (buttonElement) buttonElement.classList.add('active');
+            if (sectionName === 'relatorios') atualizarRelatorios();
         }
 
         // Selecionar calculadora
         function selectCalculadora(tipo) {
-            // Garantir que currentCalculator está definido
-            if (typeof currentCalculator === 'undefined') {
-                currentCalculator = 'tffr';
-            }
-            
             currentCalculator = tipo;
+            const validCalculators = ['tffr', 'localizacao', 'publicidade', 'logradouro', 'sanitaria', 'ambientalFiscalizacao', 'ambientalLicenca'];
             
-            if (tipo === 'tffr') {
-                // Adicionar efeito visual de clique
+            if (validCalculators.includes(tipo)) {
                 const card = event.target.closest('.calculadora-card');
                 if (card) {
                     card.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        card.style.transform = '';
-                    }, 150);
+                    setTimeout(() => { card.style.transform = ''; }, 150);
                 }
-                
-                // Navegar para a calculadora após o efeito
                 setTimeout(() => {
-                    showSection('calculator');
-                    // Preencher tabela de fatores
-                    preencherTabelaFatores();
-                    // Scroll para o topo
+                    showSection('calculator', document.querySelector('.nav-button:nth-child(2)'));
+                    mostrarCalculadora(tipo);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }, 200);
             } else {
-                alert('Esta calculadora ainda está em desenvolvimento. Por enquanto, apenas a TFFR está disponível.');
+                alert('Esta calculadora ainda está em desenvolvimento.');
             }
         }
 
+        // Mostrar calculadora específica
+        function mostrarCalculadora(tipo) {
+            document.querySelectorAll('.calculator-form').forEach(calc => calc.classList.add('hidden'));
+            const calculadora = document.getElementById(tipo + '-calculator');
+            if (calculadora) {
+                calculadora.classList.remove('hidden');
+                if (tipo === 'tffr') preencherTabelaFatores(); // Chamada restaurada
+                else if (tipo === 'localizacao') configurarCalculadoraLocalizacao();
+                else if (tipo === 'publicidade') configurarCalculadoraPublicidade();
+                else if (tipo === 'logradouro') configurarCalculadoraLogradouro();
+                else if (tipo === 'sanitaria') configurarCalculadoraSanitaria();
+                else if (tipo === 'ambientalLicenca') configurarCalculadoraLicencaAmbiental();
+            }
+        }
+
+        // --- FUNÇÃO RESTAURADA ---
         // Preencher tabela de fatores de atividade
         function preencherTabelaFatores() {
             const tbody = document.getElementById('factor-table-body');
-            tbody.innerHTML = '';
+            tbody.innerHTML = ''; // Limpar antes de preencher
             
             fatoresAtividade.forEach(item => {
                 const tr = document.createElement('tr');
@@ -739,151 +1637,454 @@
             });
         }
 
-        // Função para obter fator de atividade baseado na área
-        function obterFatorAtividade(area) {
-            if (area <= 30) return 1.00;
-            if (area <= 40) return 1.10;
-            if (area <= 50) return 1.20;
-            if (area <= 60) return 1.30;
-            if (area <= 70) return 1.40;
-            if (area <= 80) return 1.50;
-            if (area <= 90) return 1.60;
-            if (area <= 100) return 1.70;
-            if (area <= 110) return 2.00;
-            if (area <= 120) return 2.10;
-            if (area <= 130) return 2.20;
-            if (area <= 140) return 2.30;
-            if (area <= 150) return 2.50;
-            if (area <= 200) return 3.00;
-            if (area <= 250) return 3.80;
-            if (area <= 300) return 4.60;
-            if (area <= 350) return 5.40;
-            if (area <= 400) return 6.20;
-            if (area <= 450) return 7.00;
-            if (area <= 500) return 7.80;
-            if (area <= 550) return 8.60;
-            if (area <= 600) return 9.40;
-            if (area <= 650) return 10.20;
-            if (area <= 700) return 11.00;
-            if (area <= 750) return 11.80;
-            if (area <= 800) return 12.60;
-            if (area <= 850) return 13.40;
-            if (area <= 900) return 14.20;
-            if (area <= 950) return 15.00;
-            if (area <= 1000) return 15.80;
-            if (area <= 1050) return 16.60;
-            if (area <= 1100) return 17.40;
-            if (area <= 1150) return 18.20;
-            if (area <= 1200) return 19.00;
-            if (area <= 1250) return 19.80;
-            if (area <= 1300) return 20.60;
-            if (area <= 1350) return 21.40;
-            if (area <= 1400) return 22.20;
-            if (area <= 1450) return 23.00;
-            if (area <= 1500) return 23.80;
-            
-            // Para áreas acima de 1500m²
-            const excesso = area - 1500;
-            const incrementos = Math.floor(excesso / 50);
-            return 23.80 + (incrementos * 0.70);
+
+        // --- LÓGICA DE CONFIGURAÇÃO DOS FORMULÁRIOS ---
+        function configurarCalculadoraLocalizacao() {
+            document.getElementById('tipo-atividade').addEventListener('change', function() {
+                document.getElementById('info-nao-sujeita').style.display = (this.value === 'nao-fisica') ? 'block' : 'none';
+            });
         }
 
-        // Calcular TFFR
+        function configurarCalculadoraPublicidade() {
+            document.querySelectorAll('#tipos-publicidade input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    const item = this.closest('.publicidade-item');
+                    const inputs = item.querySelectorAll('input[type="number"]');
+                    inputs.forEach(input => { input.disabled = !this.checked; if (!this.checked) input.value = ''; });
+                    item.classList.toggle('item-selecionado', this.checked);
+                });
+            });
+        }
+
+        function configurarCalculadoraLogradouro() {
+            document.querySelectorAll('#categorias-logradouro input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    const item = this.closest('.logradouro-item');
+                    const inputs = item.querySelectorAll('input[type="number"]');
+                    inputs.forEach(input => { input.disabled = !this.checked; if (!this.checked) input.value = ''; });
+                    item.classList.toggle('item-selecionado', this.checked);
+                });
+            });
+        }
+
+        function configurarCalculadoraSanitaria() {
+            const tipoTaxa = document.getElementById('tipo-taxa-sanitaria');
+            const secoes = document.querySelectorAll('.taxa-sanitaria-section');
+            tipoTaxa.addEventListener('change', function() {
+                secoes.forEach(secao => secao.style.display = 'none');
+                if (this.value) {
+                    const secao = document.getElementById(`secao-${this.value}`);
+                    if (secao) secao.style.display = 'block';
+                }
+            });
+
+            document.querySelectorAll('#tipos-veiculos input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    const item = this.closest('.veiculo-item');
+                    const input = item.querySelector('input[type="number"]');
+                    input.disabled = !this.checked;
+                    if (!this.checked) input.value = '';
+                    item.classList.toggle('item-selecionado', this.checked);
+                });
+            });
+        }
+
+        function configurarCalculadoraLicencaAmbiental() {
+            const tipoLicencaSelect = document.getElementById('tipo-licenca-ambiental');
+            const porteLicencaSelect = document.getElementById('porte-licenca-ambiental');
+
+            tipoLicencaSelect.addEventListener('change', function() {
+                const isLAS = this.value === 'las';
+                // Para LAS, o porte não é aplicável, desabilita a seleção.
+                porteLicencaSelect.disabled = isLAS;
+                if(isLAS) porteLicencaSelect.value = '';
+            });
+        }
+
+        function toggleViabilidadePorte(checked) {
+            document.getElementById('porte-viabilidade-group').classList.toggle('hidden', !checked);
+        }
+
+        // --- LÓGICA DE CÁLCULO ---
+
+        function obterFatorAtividade(area) {
+            if (area <= 30) return 1.00; if (area <= 40) return 1.10; if (area <= 50) return 1.20;
+            if (area <= 60) return 1.30; if (area <= 70) return 1.40; if (area <= 80) return 1.50;
+            if (area <= 90) return 1.60; if (area <= 100) return 1.70; if (area <= 110) return 2.00;
+            if (area <= 120) return 2.10; if (area <= 130) return 2.20; if (area <= 140) return 2.30;
+            if (area <= 150) return 2.50; if (area <= 200) return 3.00; if (area <= 250) return 3.80;
+            if (area <= 300) return 4.60; if (area <= 350) return 5.40; if (area <= 400) return 6.20;
+            if (area <= 450) return 7.00; if (area <= 500) return 7.80; if (area <= 550) return 8.60;
+            if (area <= 600) return 9.40; if (area <= 650) return 10.20; if (area <= 700) return 11.00;
+            if (area <= 750) return 11.80; if (area <= 800) return 12.60; if (area <= 850) return 13.40;
+            if (area <= 900) return 14.20; if (area <= 950) return 15.00; if (area <= 1000) return 15.80;
+            if (area <= 1050) return 16.60; if (area <= 1100) return 17.40; if (area <= 1150) return 18.20;
+            if (area <= 1200) return 19.00; if (area <= 1250) return 19.80; if (area <= 1300) return 20.60;
+            if (area <= 1350) return 21.40; if (area <= 1400) return 22.20; if (area <= 1450) return 23.00;
+            if (area <= 1500) return 23.80;
+            return 23.80 + (Math.floor((area - 1500) / 50) * 0.70);
+        }
+
         function calcularTFFR() {
             try {
-                // Garantir que relatorios está definido
-                if (typeof relatorios === 'undefined') {
-                    relatorios = [];
-                }
-                
-                // Obter valores do formulário
+                if (typeof relatorios === 'undefined') relatorios = [];
                 const upfValue = parseFloat(document.getElementById('upf-value').value) || 0;
                 const nomeEstabelecimento = document.getElementById('nome-estabelecimento').value || 'Estabelecimento não informado';
                 const tempoDiurno = parseFloat(document.getElementById('tempo-diurno').value) || 0;
                 const tempoNoturno = parseFloat(document.getElementById('tempo-noturno').value) || 0;
-                const areaConstruida = parseFloat(document.getElementById('area-construida').value);
-                const areaEconomica = parseFloat(document.getElementById('area-economica').value);
-                const areaSemExploracao = parseFloat(document.getElementById('area-sem-exploracao').value);
+                const areaConstruida = parseFloat(document.getElementById('area-construida').value) || 0; // Garantir que é 0 se NaN
+                const areaEconomica = parseFloat(document.getElementById('area-economica').value) || 0;   // Garantir que é 0 se NaN
+                const areaSemExploracao = parseFloat(document.getElementById('area-sem-exploracao').value) || 0; // Garantir que é 0 se NaN
 
-                // Tratar NaN como 0
-                const areaConstruidaFinal = isNaN(areaConstruida) ? 0 : areaConstruida;
-                const areaEconomicaFinal = isNaN(areaEconomica) ? 0 : areaEconomica;  
-                const areaSemExploracaoFinal = isNaN(areaSemExploracao) ? 0 : areaSemExploracao;
 
-                // Validações
                 if (upfValue <= 0) {
-                    alert('Por favor, informe o valor da UPF.');
-                    return;
+                     alert('Por favor, informe o valor da UPF.'); return;
                 }
-                
                 if (tempoDiurno === 0 && tempoNoturno === 0) {
-                    alert('Por favor, informe o tempo de funcionamento (diurno ou noturno).');
-                    return;
+                     alert('Por favor, informe o tempo de funcionamento (diurno ou noturno).'); return;
                 }
-                
-                if (areaConstruidaFinal === 0 && areaEconomicaFinal === 0 && areaSemExploracaoFinal === 0) {
-                    alert('Por favor, informe ao menos um tipo de área do estabelecimento (construída, econômica ou sem exploração).');
-                    return;
+                if (areaConstruida === 0 && areaEconomica === 0 && areaSemExploracao === 0) {
+                    alert('Por favor, informe ao menos um tipo de área do estabelecimento (construída, econômica ou sem exploração).'); return;
                 }
 
-                // Cálculo do componente tempo
-                const hd = 0.15; // 15% da UPF
-                const hn = 0.20; // 20% da UPF
-                const componenteTempo = (hd * tempoDiurno) + (hn * tempoNoturno);
 
-                // Cálculo do componente área
-                const K = areaConstruidaFinal > 0 ? obterFatorAtividade(areaConstruidaFinal) : 0;
-                const X = areaEconomicaFinal > 0 ? obterFatorAtividade(areaEconomicaFinal) : 0;
-                const Y = areaSemExploracaoFinal > 0 ? obterFatorAtividade(areaSemExploracaoFinal) : 0;
-                
-                const C1 = 1.0;    // Área construída
-                const C2 = 0.75;   // Área com exploração econômica
-                const C3 = 0.25;   // Área sem exploração econômica
-                
-                const componenteArea = (K * C1) + (X * C2) + (Y * C3);
-
-                // Cálculo final da TFFR
+                const componenteTempo = (0.15 * tempoDiurno) + (0.20 * tempoNoturno);
+                const K = areaConstruida > 0 ? obterFatorAtividade(areaConstruida) : 0;
+                const X = areaEconomica > 0 ? obterFatorAtividade(areaEconomica) : 0;
+                const Y = areaSemExploracao > 0 ? obterFatorAtividade(areaSemExploracao) : 0;
+                const componenteArea = (K * 1.0) + (X * 0.75) + (Y * 0.25);
                 const tffr = componenteTempo * componenteArea;
                 const tffrReais = tffr * upfValue;
 
-                // Criar objeto do resultado
-                const resultado = {
-                    id: Date.now(),
-                    tipo: 'TFFR',
-                    nomeEstabelecimento: nomeEstabelecimento,
-                    data: new Date().toLocaleDateString('pt-BR'),
-                    hora: new Date().toLocaleTimeString('pt-BR'),
-                    dados: {
-                        upfValue,
-                        tempoDiurno,
-                        tempoNoturno,
-                        areaConstruida: areaConstruidaFinal,
-                        areaEconomica: areaEconomicaFinal,
-                        areaSemExploracao: areaSemExploracaoFinal
-                    },
-                    calculo: {
-                        componenteTempo,
-                        componenteArea,
-                        K, X, Y,
-                        tffr,
-                        tffrReais
-                    }
-                };
-
-                // Adicionar aos relatórios
+                const resultado = { id: Date.now(), tipo: 'TFFR', nomeEstabelecimento, data: new Date().toLocaleDateString('pt-BR'), hora: new Date().toLocaleTimeString('pt-BR'), dados: { upfValue, tempoDiurno, tempoNoturno, areaConstruida, areaEconomica, areaSemExploracao }, calculo: { componenteTempo, componenteArea, K, X, Y, tffr, tffrReais } };
                 relatorios.push(resultado);
                 salvarRelatorios();
-
-                // Exibir resultado
-                mostrarResultadoTFFR(resultado);
-                
-            } catch (error) {
-                console.error('Erro no cálculo da TFFR:', error);
-                alert('Ocorreu um erro no cálculo. Por favor, verifique os dados e tente novamente.');
-            }
+                mostrarResultadoTFFR(resultado); // Chamada para a função completa
+            } catch (error) { console.error('Erro TFFR:', error); alert('Erro no cálculo.'); }
         }
 
-        // Mostrar resultado da TFFR
+        function calcularLocalizacao() {
+             try {
+                if (typeof relatorios === 'undefined') relatorios = [];
+                const upfValue = parseFloat(document.getElementById('upf-localizacao').value) || 0;
+                const nomeEstabelecimento = document.getElementById('nome-estabelecimento-localizacao').value || 'Estabelecimento não informado';
+                const endereco = document.getElementById('endereco-localizacao').value || 'Endereço não informado';
+                const tipoAtividade = document.getElementById('tipo-atividade').value;
+
+                if (upfValue <= 0) {
+                    alert('Por favor, informe o valor da UPF.'); return;
+                }
+                if (!tipoAtividade) {
+                    alert('Por favor, selecione o tipo de atividade.'); return;
+                }
+                if (tipoAtividade === 'nao-fisica') {
+                    alert('Esta atividade NÃO está sujeita à Taxa de Licença de Localização, pois não possui estabelecimento físico de funcionamento.');
+                    document.getElementById('localizacao-result').style.display = 'none';
+                    return;
+                }
+
+                const valorUPF = 6.0;
+                const valorReais = valorUPF * upfValue;
+                const resultado = { id: Date.now(), tipo: 'Licença de Localização', nomeEstabelecimento, data: new Date().toLocaleDateString('pt-BR'), hora: new Date().toLocaleTimeString('pt-BR'), dados: { upfValue, endereco, tipoAtividade }, calculo: { valorUPF, valorReais } };
+                relatorios.push(resultado);
+                salvarRelatorios();
+                mostrarResultadoLocalizacao(resultado);
+            } catch (error) { console.error('Erro Localização:', error); alert('Erro no cálculo.'); }
+        }
+
+        function calcularPublicidade() {
+            try {
+                if (typeof relatorios === 'undefined') relatorios = [];
+                const upfValue = parseFloat(document.getElementById('upf-publicidade').value) || 0;
+                const nomeEstabelecimento = document.getElementById('nome-estabelecimento-publicidade').value || 'Estabelecimento não informado';
+                const taxaAutorizacao = document.getElementById('taxa-autorizacao').checked;
+
+                if (upfValue <= 0) {
+                    alert('Por favor, informe o valor da UPF.'); return;
+                }
+
+                let totalUPF = 0;
+                let itensCalculados = [];
+
+                if (taxaAutorizacao) {
+                    totalUPF += 1.0;
+                    itensCalculados.push({ tipo: 'Taxa de Autorização de Publicidade', quantidade: 1, valorUPF: 1.0, valorReais: 1.0 * upfValue, periodicidade: 'Única' });
+                }
+
+                const tiposFiscalizacao = [
+                    { id: '2-1', nome: 'Letreiros na parte externa dos edifícios', valor: 1.0, unidade: 'm²', periodo: 'Por Ano' }, { id: '2-2', nome: 'Veículo de transporte (interna/externa)', valor: 1.5, unidade: 'm²', periodo: 'Por Ano' },
+                    { id: '2-3', nome: 'Dispositivo televisível ou tecnologia similar', valor: 1.0, unidade: 'm²', periodo: 'Por Ano' }, { id: '2-4', nome: 'Condução por pessoas em vias públicas', valor: 1.0, unidade: 'unid', periodo: 'Por Ano' },
+                    { id: '2-5', nome: 'Faixa exposta por tempo determinado', valor: 0.1, unidade: 'm²', periodo: 'Por Evento' }, { id: '2-6', nome: 'Flâmulas e bandeirolas (até 1m²)', valor: 1.0, unidade: 'unid', periodo: 'Por Evento' },
+                    { id: '2-7', nome: 'Placas indicativas de atividades', valor: 1.0, unidade: 'm²', periodo: 'Por Ano' }, { id: '2-8', nome: 'Totem publicitário', valor: 1.5, unidade: 'm²', periodo: 'Por Ano' },
+                    { id: '2-9', nome: 'Dispositivo inflável', valor: 1.0, unidade: 'unid', periodo: 'Por Evento' }, { id: '2-10', nome: 'Propaganda móvel sonora', valor: 2.0, unidade: 'unid', periodo: 'Por Ano' },
+                    { id: '2-11', nome: 'Outdoor', valor: 2.0, unidade: 'unid', periodo: 'Por Ano' }, { id: '2-12', nome: 'Painel luminoso ou iluminado', valor: 0.2, unidade: 'm²', periodo: 'Por Ano' }
+                ];
+
+                tiposFiscalizacao.forEach(tipo => {
+                    const checkbox = document.getElementById(`tipo-${tipo.id}`);
+                    if (checkbox && checkbox.checked) {
+                        let quantidade = (tipo.unidade === 'm²') ? parseFloat(document.getElementById(`area-${tipo.id}`).value) || 0 : parseFloat(document.getElementById(`qtd-${tipo.id}`).value) || 0;
+                        if (quantidade > 0) {
+                            const valorUPFItem = tipo.valor * quantidade;
+                            totalUPF += valorUPFItem;
+                            itensCalculados.push({ tipo: `Taxa de Fiscalização - ${tipo.nome}`, quantidade, valorUnitario: tipo.valor, valorUPF: valorUPFItem, valorReais: valorUPFItem * upfValue, unidade: tipo.unidade, periodicidade: tipo.periodo });
+                        }
+                    }
+                });
+
+                if (itensCalculados.length === 0) {
+                    alert('Por favor, selecione ao menos uma taxa de publicidade.'); return;
+                }
+                const totalReais = totalUPF * upfValue;
+                const resultado = { id: Date.now(), tipo: 'Taxas de Publicidade', nomeEstabelecimento, data: new Date().toLocaleDateString('pt-BR'), hora: new Date().toLocaleTimeString('pt-BR'), dados: { upfValue, taxaAutorizacao }, calculo: { itensCalculados, totalUPF, totalReais } };
+                relatorios.push(resultado);
+                salvarRelatorios();
+                mostrarResultadoPublicidade(resultado);
+            } catch (error) { console.error('Erro Publicidade:', error); alert('Erro no cálculo.'); }
+        }
+
+        function calcularLogradouro() {
+            try {
+                if (typeof relatorios === 'undefined') relatorios = [];
+                const upfValue = parseFloat(document.getElementById('upf-logradouro').value) || 0;
+                const nomeEstabelecimento = document.getElementById('nome-estabelecimento-logradouro').value || 'Estabelecimento não informado';
+                const taxaAutorizacao = document.getElementById('taxa-autorizacao-logradouro').checked;
+
+                if (upfValue <= 0) {
+                    alert('Por favor, informe o valor da UPF.'); return;
+                }
+
+                let totalUPF = 0;
+                let itensCalculados = [];
+
+                if (taxaAutorizacao) {
+                    totalUPF += 0.5;
+                    itensCalculados.push({ tipo: 'Taxa de Autorização de Uso', quantidade: 1, valorUPF: 0.5, valorReais: 0.5 * upfValue, periodicidade: 'Única' });
+                }
+
+                const tiposFiscalizacao = [
+                    { id: '2-1', nome: 'Itinerante em Local Franqueado', valor: 2.0, periodo: 'Por Ano' }, { id: '2-1-1', nome: 'Itinerante - eventos esporádicos', valor: 0.0056, periodo: 'Por Dia', multiplicador: 'dias' },
+                    { id: '2-1-2', nome: 'Estacionado Guloseimas', valor: 3.0, periodo: 'Por Ano' }, { id: '2-1-2-1', nome: 'Guloseimas - eventos esporádicos', valor: 0.0083, periodo: 'Por Dia', multiplicador: 'dias' },
+                    { id: '2-1-3', nome: 'Estacionado Comércio Geral', valor: 5.0, periodo: 'Por Ano' }, { id: '2-1-3-1', nome: 'Comércio Geral - eventos esporádicos', valor: 0.014, periodo: 'Por Dia', multiplicador: 'dias' },
+                    { id: '2-1-4', nome: 'Estacionado Tipo Banca até 2m²', valor: 0.5, periodo: 'Por Mês' }, { id: '2-1-4-1', nome: 'Banca até 2m² - eventos esporádicos', valor: 0.0014, periodo: 'Por Dia', multiplicador: 'dias' },
+                    { id: '2-1-5', nome: 'Área privada com barraca', valor: 1.0, periodo: 'Por Ano', multiplicador: 'area' }, { id: '2-1-5-1', nome: 'Barraca - eventos esporádicos', valor: 0.003, periodo: 'Por Dia', multiplicador: 'area-dias' },
+                    { id: '2-1-6', nome: 'Adicional Mesas e Cadeiras', valor: 0.005, periodo: 'Por Dia', multiplicador: 'area-dias' }, { id: '2-2-1', nome: 'Feiras Populares', valor: 5.0, periodo: 'Por Ano' },
+                    { id: '2-2-2', nome: 'Feiras livres itinerantes', valor: 5.0, periodo: 'Por Ano' }, { id: '2-2-3', nome: 'Atividades comerciais precárias', valor: 0.005, periodo: 'Por Dia', multiplicador: 'area-dias' },
+                    { id: '2-2-4', nome: 'Festa Popular, Carnaval', valor: 0.002, periodo: 'Por Dia', multiplicador: 'area-dias' }, { id: '2-2-5', nome: 'Feriados Religiosos', valor: 0.001, periodo: 'Por Dia', multiplicador: 'area-dias' },
+                    { id: '2-3', nome: 'Mesas e Cadeiras na Calçada', valor: 0.10, periodo: 'Por Ano', multiplicador: 'area' }, { id: '2-4-1', nome: 'Veículo Adaptado', valor: 1.20, periodo: 'Por Ano', multiplicador: 'area' },
+                    { id: '2-4-1-1', nome: 'Veículo - eventos esporádicos', valor: 0.0033, periodo: 'Por Dia', multiplicador: 'area-dias' }, { id: '2-5', nome: 'Banca de Jornal e Revistas', valor: 0.50, periodo: 'Por Ano', multiplicador: 'area' },
+                    { id: '2-6-1', nome: 'Comércio em estrutura aprovada', valor: 1.50, periodo: 'Por Ano', multiplicador: 'area' }, { id: '2-6-3', nome: 'Máquina de Sorvete e similares', valor: 1.50, periodo: 'Por Ano' }
+                ];
+
+                tiposFiscalizacao.forEach(tipo => {
+                    const checkbox = document.getElementById(`item-${tipo.id}`);
+                    if (checkbox && checkbox.checked) {
+                        let quantidade = 1; let valorUPFItem = tipo.valor;
+                        if (tipo.multiplicador === 'area') {
+                            const area = parseFloat(document.getElementById(`area-${tipo.id}`).value) || 0;
+                            if (area > 0) { quantidade = area; valorUPFItem = tipo.valor * area; } else return;
+                        } else if (tipo.multiplicador === 'dias') {
+                            const dias = parseFloat(document.getElementById(`dias-${tipo.id}`).value) || 0;
+                            if (dias > 0) { quantidade = dias; valorUPFItem = tipo.valor * dias; } else return;
+                        } else if (tipo.multiplicador === 'area-dias') {
+                            const area = parseFloat(document.getElementById(`area-${tipo.id}`).value) || 0;
+                            const dias = parseFloat(document.getElementById(`dias-${tipo.id}`).value) || 0;
+                            if (area > 0 && dias > 0) { quantidade = area * dias; valorUPFItem = tipo.valor * area * dias; } else return;
+                        }
+                        if (valorUPFItem > 0) {
+                            totalUPF += valorUPFItem;
+                            itensCalculados.push({ tipo: `Taxa de Fiscalização - ${tipo.nome}`, quantidade, valorUnitario: tipo.valor, valorUPF: valorUPFItem, valorReais: valorUPFItem * upfValue, periodicidade: tipo.periodo });
+                        }
+                    }
+                });
+
+                if (itensCalculados.length === 0) {
+                    alert('Por favor, selecione ao menos uma taxa de uso de logradouro.'); return;
+                }
+                const totalReais = totalUPF * upfValue;
+                const resultado = { id: Date.now(), tipo: 'Taxas de Logradouro', nomeEstabelecimento, data: new Date().toLocaleDateString('pt-BR'), hora: new Date().toLocaleTimeString('pt-BR'), dados: { upfValue, taxaAutorizacao }, calculo: { itensCalculados, totalUPF, totalReais } };
+                relatorios.push(resultado);
+                salvarRelatorios();
+                mostrarResultadoLogradouro(resultado);
+            } catch (error) { console.error('Erro Logradouro:', error); alert('Erro no cálculo.'); }
+        }
+        
+        function calcularSanitaria() {
+            try {
+                if (typeof relatorios === 'undefined') relatorios = [];
+                const upfValue = parseFloat(document.getElementById('upf-sanitaria').value) || 0;
+                const nomeEstabelecimento = document.getElementById('nome-estabelecimento-sanitaria').value || 'Estabelecimento não informado';
+                const tipoTaxa = document.getElementById('tipo-taxa-sanitaria').value;
+
+                if (upfValue <= 0) { alert('Por favor, informe o valor da UPF.'); return; }
+                if (!tipoTaxa) { alert('Por favor, selecione o tipo de taxa sanitária.'); return; }
+
+                let totalUPF = 0; let detalhesCalculo = ''; let tipoTexto = '';
+
+                if (tipoTaxa === 'licenca') {
+                    const area = parseFloat(document.getElementById('area-licenca').value) || 0;
+                    const reinspecao = document.getElementById('reinspecao-licenca').checked;
+                    if (area <= 0) { alert('Por favor, informe a área do estabelecimento.'); return; }
+                    let valorBase = (area <= 30) ? 1 : (area <= 60) ? 2 : (area <= 90) ? 3 : (area <= 120) ? 4 : 5;
+                    totalUPF = valorBase + (reinspecao ? 1 : 0);
+                    tipoTexto = 'Licença Sanitária';
+                    detalhesCalculo = `<div style="background: #e6fffa; padding: 15px; border-radius: 8px; margin: 15px 0; color: #2d3748;"><strong>📏 Área:</strong> ${area.toLocaleString('pt-BR')} m²<br><strong>💰 Valor base:</strong> ${valorBase} UPF<br>${reinspecao ? '<strong>🔍 Reinspeção:</strong> +1 UPF<br>' : ''}<strong>🧮 Total:</strong> ${totalUPF.toFixed(2)} UPF</div>`;
+                } else if (tipoTaxa === 'fiscalizacao') {
+                    const area = parseFloat(document.getElementById('area-tfs').value) || 0;
+                    const tempoFuncionamento = parseFloat(document.getElementById('tempo-funcionamento-tfs').value) || 0;
+                    if (area <= 0) { alert('Por favor, informe a área do estabelecimento.'); return; }
+                    if (tempoFuncionamento === 0) { alert('Por favor, selecione o tempo de funcionamento.'); return; }
+                    let upfArea = (area <= 30) ? 2 : (area <= 60) ? 3 : (area <= 90) ? 4 : (area <= 120) ? 5 : (5 + (Math.ceil((area - 120) / 50) * 0.5));
+                    totalUPF = upfArea * tempoFuncionamento * 1.00; // Custo operacional 1.00
+                    tipoTexto = 'Taxa de Fiscalização Sanitária (TFS)';
+                    detalhesCalculo = `<div style="background: #e6fffa; padding: 15px; border-radius: 8px; margin: 15px 0; color: #2d3748;"><strong>📏 Área:</strong> ${area.toLocaleString('pt-BR')} m²<br><strong>📊 UPF por área:</strong> ${upfArea.toFixed(2)}<br><strong>⏰ Tempo funcionamento:</strong> ${(tempoFuncionamento * 100)}% (${tempoFuncionamento.toFixed(2)})<br><strong>🔧 Custo operacional:</strong> 1.00 (Risco Alto)<br><strong>🧮 Cálculo:</strong> ${upfArea.toFixed(2)} × ${tempoFuncionamento.toFixed(2)} × 1.00 = ${totalUPF.toFixed(2)} UPF</div>`;
+                } else if (tipoTaxa === 'veiculo') {
+                    const tiposVeiculos = [
+                        { id: 'ambulancia', nome: 'Ambulância', valor: 3.0 }, { id: 'ambulancia-vet', nome: 'Ambulância veterinária', valor: 2.0 }, { id: 'aviao-uti', nome: 'Avião UTI', valor: 6.0 },
+                        { id: 'bau-engate', nome: 'Baú com engate', valor: 0.5 }, { id: 'caminhao-bau', nome: 'Caminhão baú lonado', valor: 1.0 }, { id: 'bau-isotermico', nome: 'Caminhão baú isotérmico', valor: 2.0 },
+                        { id: 'pipa', nome: 'Caminhão pipa', valor: 2.0 }, { id: 'limpa-fossa', nome: 'Caminhão limpa fossa', valor: 3.0 }, { id: 'trailer', nome: 'Trailers', valor: 1.5 }, { id: 'furgao', nome: 'Veículos furgões', valor: 2.0 }
+                    ];
+                    let detalhesVeiculos = [];
+                    tiposVeiculos.forEach(v => {
+                        const cb = document.getElementById(`veiculo-${v.id}`);
+                        if (cb && cb.checked) {
+                            const qtd = parseFloat(document.getElementById(`qtd-${v.id}`).value) || 0;
+                            if (qtd > 0) { const val = v.valor * qtd; totalUPF += val; detalhesVeiculos.push(`• ${v.nome}: ${qtd} × ${v.valor.toFixed(1)} = ${val.toFixed(1)} UPF`); }
+                        }
+                    });
+                    if (detalhesVeiculos.length === 0) { alert('Selecione ao menos um tipo de veículo.'); return; }
+                    tipoTexto = 'Inspeção Sanitária de Veículos';
+                    detalhesCalculo = `<div style="background: #e6fffa; padding: 15px; border-radius: 8px; margin: 15px 0; color: #2d3748;"><strong>🚑 Veículos:</strong><br>${detalhesVeiculos.join('<br>')}<br><br><strong>🧮 Total:</strong> ${totalUPF.toFixed(1)} UPF</div>`;
+                } else if (tipoTaxa === 'evento') {
+                    const areaM = parseFloat(document.getElementById('area-manipulacao').value) || 0;
+                    const diasE = parseFloat(document.getElementById('dias-evento').value) || 0;
+                    const pontosC = parseFloat(document.getElementById('pontos-comercializacao').value) || 1;
+                    if (areaM <= 0 || diasE <= 0) { alert('Informe área e dias do evento.'); return; }
+                    let valorPD = (areaM <= 10) ? 0.5 : (areaM <= 20) ? 1.0 : (areaM <= 50) ? 1.5 : 2.0;
+                    totalUPF = valorPD * diasE * pontosC;
+                    tipoTexto = 'Fiscalização para Evento Temporário';
+                    detalhesCalculo = `<div style="background: #e6fffa; padding: 15px; border-radius: 8px; margin: 15px 0; color: #2d3748;"><strong>📏 Área:</strong> ${areaM.toLocaleString('pt-BR')} m²<br><strong>📅 Dias:</strong> ${diasE}<br><strong>🏪 Pontos:</strong> ${pontosC}<br><strong>💰 Valor/dia/ponto:</strong> ${valorPD.toFixed(1)} UPF<br><strong>🧮 Total:</strong> ${totalUPF.toFixed(1)} UPF</div>`;
+                } else if (tipoTaxa === 'agua') {
+                    const uniH = parseFloat(document.getElementById('unidades-habitacionais').value) || 0;
+                    if (uniH <= 0) { alert('Informe unidades habitacionais.'); return; }
+                    totalUPF = (uniH <= 10) ? 5.0 : (uniH <= 100) ? (5.0 + (uniH - 10) * 0.15) : (5.0 + (90 * 0.15) + (uniH - 100) * 0.10);
+                    tipoTexto = 'Fiscalização da Qualidade da Água';
+                    detalhesCalculo = `<div style="background: #e6fffa; padding: 15px; border-radius: 8px; margin: 15px 0; color: #2d3748;"><strong>🏠 Unidades:</strong> ${uniH.toLocaleString('pt-BR')}<br><strong>💰 Base:</strong> 5,00 UPF<br>${uniH > 10 ? `<strong>➕ Adicional:</strong> ${(totalUPF - 5).toFixed(2)} UPF<br>` : ''}<strong>🧮 Total:</strong> ${totalUPF.toFixed(2)} UPF</div>`;
+                } else if (tipoTaxa === 'ambulante') {
+                    const qtdA = parseFloat(document.getElementById('qtd-ambulantes').value) || 1;
+                    totalUPF = 1.0 * qtdA;
+                    tipoTexto = 'Autorização Sanitária para Ambulantes';
+                    detalhesCalculo = `<div style="background: #e6fffa; padding: 15px; border-radius: 8px; margin: 15px 0; color: #2d3748;"><strong>🛒 Estruturas:</strong> ${qtdA}<br><strong>💰 Valor/estrutura:</strong> 1,00 UPF<br><strong>🧮 Total:</strong> ${totalUPF.toFixed(1)} UPF</div>`;
+                }
+
+                const totalReais = totalUPF * upfValue;
+                const resultado = { id: Date.now(), tipo: tipoTexto, nomeEstabelecimento, data: new Date().toLocaleDateString('pt-BR'), hora: new Date().toLocaleTimeString('pt-BR'), dados: { upfValue, tipoTaxa }, calculo: { totalUPF, totalReais, detalhesCalculo } };
+                relatorios.push(resultado);
+                salvarRelatorios();
+                mostrarResultadoSanitaria(resultado);
+            } catch (error) { console.error('Erro Sanitária:', error); alert('Erro no cálculo.'); }
+        }
+
+
+        function calcularAmbientalFiscalizacao() {
+            try {
+                if (typeof relatorios === 'undefined') relatorios = [];
+                const upfValue = parseFloat(document.getElementById('upf-ambiental-fiscalizacao').value) || 0;
+                const nomeEmpreendimento = document.getElementById('nome-empreendimento-fiscalizacao').value || 'Não informado';
+                const porte = document.getElementById('porte-fiscalizacao').value;
+
+                if (upfValue <= 0 || !porte) {
+                    alert('Verifique se todos os campos (UPF, Porte) estão preenchidos.'); return;
+                }
+
+                const taxaUPF = taxasFiscalizacaoAmbiental[porte]; 
+                const taxaReais = taxaUPF * upfValue;
+
+                const resultado = { id: Date.now(), tipo: 'Fiscalização Ambiental', nomeEstabelecimento: nomeEmpreendimento, data: new Date().toLocaleDateString('pt-BR'), hora: new Date().toLocaleTimeString('pt-BR'), dados: { upfValue, porte }, calculo: { taxaUPF, taxaReais } };
+                relatorios.push(resultado);
+                salvarRelatorios();
+                mostrarResultadoAmbientalFiscalizacao(resultado);
+            } catch (error) { console.error('Erro Fiscalização Ambiental:', error); alert('Erro no cálculo.'); }
+        }
+
+        function calcularAmbientalLicenca() {
+            try {
+                if (typeof relatorios === 'undefined') relatorios = [];
+                const upfValue = parseFloat(document.getElementById('upf-ambiental-licenca').value) || 0;
+                const nomeEmpreendimento = document.getElementById('nome-empreendimento-licenca').value || 'Não informado';
+                const tipoLicenca = document.getElementById('tipo-licenca-ambiental').value;
+                const porteLicenca = document.getElementById('porte-licenca-ambiental').value;
+
+                if (upfValue <= 0) {
+                    alert('Informe o valor da UPF.'); return;
+                }
+
+                let totalUPF = 0;
+                let itensCalculados = [];
+                
+                // 1. Taxa da Licença Principal
+                if (tipoLicenca && (porteLicenca || tipoLicenca === 'las')) {
+                    let taxaLicencaUPF = 0;
+                    if (tipoLicenca === 'las') {
+                        taxaLicencaUPF = taxasLicencaAmbiental.las.lai; 
+                    } else if (taxasLicencaAmbiental[porteLicenca] && taxasLicencaAmbiental[porteLicenca][tipoLicenca]) {
+                        taxaLicencaUPF = taxasLicencaAmbiental[porteLicenca][tipoLicenca]; 
+                    }
+                    if (taxaLicencaUPF > 0) {
+                        totalUPF += taxaLicencaUPF;
+                        itensCalculados.push({ descricao: `Licença ${tipoLicenca.toUpperCase()} - Porte ${porteLicenca ? porteLicenca.toUpperCase() : 'N/A (LAS)'}`, valorUPF: taxaLicencaUPF });
+                    }
+                }
+                
+                const porteParaEstudo = porteLicenca || (tipoLicenca === 'las' ? 'lapp' : null); 
+                
+                // 2. Análise EIA/RIMA
+                if (document.getElementById('incluir-eia-rima').checked && porteParaEstudo && taxasAnaliseEstudo.eia_rima[porteParaEstudo]) {
+                    const taxaAnalise = taxasAnaliseEstudo.eia_rima[porteParaEstudo]; 
+                    totalUPF += taxaAnalise;
+                    itensCalculados.push({ descricao: 'Análise EIA/RIMA', valorUPF: taxaAnalise });
+                }
+
+                // 3. Análise EIV/RIV
+                if (document.getElementById('incluir-eiv-riv').checked && porteParaEstudo && taxasAnaliseEstudo.eiv_riv[porteParaEstudo]) {
+                    const taxaAnalise = taxasAnaliseEstudo.eiv_riv[porteParaEstudo]; 
+                    totalUPF += taxaAnalise;
+                    itensCalculados.push({ descricao: 'Análise EIV/RIV', valorUPF: taxaAnalise });
+                }
+
+                // 4. Certidão de Viabilidade
+                if (document.getElementById('incluir-certidao-viabilidade').checked) {
+                    const porteCertidao = document.getElementById('porte-certidao-viabilidade').value;
+                    if (porteCertidao && taxasDiversasAmbiental.certidaoViabilidade[porteCertidao]) {
+                        const taxaCertidao = taxasDiversasAmbiental.certidaoViabilidade[porteCertidao]; 
+                        totalUPF += taxaCertidao;
+                        itensCalculados.push({ descricao: `Certidão de Viabilidade - Porte ${porteCertidao}`, valorUPF: taxaCertidao });
+                    }
+                }
+
+                // 5. Cadastro Simplificado
+                if (document.getElementById('incluir-cadastro-simplificado').checked) {
+                    const taxaCadastro = taxasDiversasAmbiental.cadastroSimplificado; 
+                    totalUPF += taxaCadastro;
+                    itensCalculados.push({ descricao: 'Cadastro Ambiental Simplificado', valorUPF: taxaCadastro });
+                }
+
+                if (itensCalculados.length === 0) {
+                    alert('Selecione ao menos um tipo de licença ou serviço para calcular.'); return;
+                }
+
+                const totalReais = totalUPF * upfValue;
+                const resultado = { id: Date.now(), tipo: 'Licenciamento Ambiental', nomeEstabelecimento: nomeEmpreendimento, data: new Date().toLocaleDateString('pt-BR'), hora: new Date().toLocaleTimeString('pt-BR'), dados: { upfValue, itensCalculados }, calculo: { totalUPF, totalReais } };
+                relatorios.push(resultado);
+                salvarRelatorios();
+                mostrarResultadoAmbientalLicenca(resultado);
+
+            } catch (error) { console.error('Erro Licença Ambiental:', error); alert('Erro no cálculo.'); }
+        }
+
+
+        // --- LÓGICA DE EXIBIÇÃO DE RESULTADOS ---
+        // --- FUNÇÃO RESTAURADA E COMPLETA ---
         function mostrarResultadoTFFR(resultado) {
             const resultBox = document.getElementById('tffr-result');
             const { calculo, dados } = resultado;
@@ -943,12 +2144,132 @@
             `;
             
             resultBox.style.display = 'block';
+            resultBox.classList.add('sucesso'); // Para animação
             resultBox.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Limpar formulário
+        function mostrarResultadoLocalizacao(resultado) {
+            const resultBox = document.getElementById('localizacao-result');
+            const { calculo, dados } = resultado;
+            resultBox.innerHTML = `
+                <h3>✅ Taxa de Localização Calculada com Sucesso!</h3>
+                <div style="font-size: 2em; margin: 15px 0;"><strong>R$ ${calculo.valorReais.toFixed(2)}</strong></div>
+                <div style="font-size: 1.1em;">${calculo.valorUPF.toFixed(1)} × UPF (R$ ${dados.upfValue.toFixed(2)})</div>
+                <div class="result-details">
+                    <h4 style="margin-bottom: 15px; color: #2d3748;">📊 Detalhes:</h4>
+                    <div style="background: #e6fffa; padding: 15px; border-radius: 8px; color: #2d3748;">
+                        <strong>📍 Estabelecimento:</strong> ${resultado.nomeEstabelecimento}<br>
+                        <strong>📧 Endereço:</strong> ${dados.endereco}<br>
+                        <strong>💰 Valor fixo:</strong> 6 UPF (Taxa de Licença de Localização)<br>
+                        <strong>🔄 Periodicidade:</strong> Pagamento único até mudança de endereço
+                    </div>
+                </div>`;
+            resultBox.style.display = 'block';
+            resultBox.classList.add('sucesso');
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function mostrarResultadoPublicidade(resultado) {
+            const resultBox = document.getElementById('publicidade-result');
+            const { calculo, dados } = resultado;
+            let detalhesItens = calculo.itensCalculados.map(item => `
+                <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div><strong>${item.tipo}</strong><br><small style="color: #6c757d;">${item.unidade === 'm²' ? `${item.quantidade} m²` : `${item.quantidade} unid`} × ${item.valorUnitario || item.valorUPF} UPF - ${item.periodicidade}</small></div>
+                        <div style="text-align: right;"><strong style="color: #38a169; font-size: 1.2em;">R$ ${item.valorReais.toFixed(2)}</strong><br><small style="color: #6c757d;">${item.valorUPF.toFixed(2)} UPF</small></div>
+                    </div>
+                </div>`).join('');
+            resultBox.innerHTML = `
+                <h3>✅ Taxas de Publicidade Calculadas!</h3>
+                <div style="font-size: 2em; margin: 15px 0;"><strong>R$ ${calculo.totalReais.toFixed(2)}</strong></div>
+                <div style="font-size: 1.1em;">${calculo.totalUPF.toFixed(2)} × UPF (R$ ${dados.upfValue.toFixed(2)})</div>
+                <div class="result-details"><h4 style="margin-bottom: 15px; color: #2d3748;">📊 Itens:</h4>${detalhesItens}</div>`;
+            resultBox.style.display = 'block';
+            resultBox.classList.add('sucesso');
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function mostrarResultadoLogradouro(resultado) {
+            const resultBox = document.getElementById('logradouro-result');
+            const { calculo, dados } = resultado;
+            let detalhesItens = calculo.itensCalculados.map(item => `
+                <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div><strong>${item.tipo}</strong><br><small style="color: #6c757d;">${item.quantidade === 1 ? '1 unid' : `${item.quantidade} unid/m²/dias`} × ${item.valorUnitario || item.valorUPF} UPF - ${item.periodicidade}</small></div>
+                        <div style="text-align: right;"><strong style="color: #38a169; font-size: 1.2em;">R$ ${item.valorReais.toFixed(2)}</strong><br><small style="color: #6c757d;">${item.valorUPF.toFixed(4)} UPF</small></div>
+                    </div>
+                </div>`).join('');
+             resultBox.innerHTML = `
+                <h3>✅ Taxas de Logradouro Calculadas!</h3>
+                <div style="font-size: 2em; margin: 15px 0;"><strong>R$ ${calculo.totalReais.toFixed(2)}</strong></div>
+                <div style="font-size: 1.1em;">${calculo.totalUPF.toFixed(4)} × UPF (R$ ${dados.upfValue.toFixed(2)})</div>
+                <div class="result-details"><h4 style="margin-bottom: 15px; color: #2d3748;">📊 Itens:</h4>${detalhesItens}</div>`;
+            resultBox.style.display = 'block';
+            resultBox.classList.add('sucesso');
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function mostrarResultadoSanitaria(resultado) {
+            const resultBox = document.getElementById('sanitaria-result');
+            const { calculo, dados } = resultado;
+            resultBox.innerHTML = `
+                <h3>✅ ${resultado.tipo} Calculada!</h3>
+                <div style="font-size: 2em; margin: 15px 0;"><strong>R$ ${calculo.totalReais.toFixed(2)}</strong></div>
+                <div style="font-size: 1.1em;">${calculo.totalUPF.toFixed(2)} × UPF (R$ ${dados.upfValue.toFixed(2)})</div>
+                <div class="result-details"><h4 style="margin-bottom: 15px; color: #2d3748;">📊 Detalhes:</h4>${calculo.detalhesCalculo}</div>`;
+            resultBox.style.display = 'block';
+            resultBox.classList.add('sucesso');
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function mostrarResultadoAmbientalFiscalizacao(resultado) {
+            const resultBox = document.getElementById('ambiental-fiscalizacao-result');
+            const { calculo, dados } = resultado;
+            resultBox.innerHTML = `
+                <h3>✅ Taxa de Fiscalização Ambiental Calculada!</h3>
+                <div style="font-size: 2em; margin: 15px 0;"><strong>R$ ${calculo.taxaReais.toFixed(2)}</strong></div>
+                <div style="font-size: 1.1em;">${calculo.taxaUPF.toFixed(2)} × UPF (R$ ${dados.upfValue.toFixed(2)})</div>
+                <div class="result-details">
+                    <h4 style="margin-bottom: 15px; color: #2d3748;">📊 Detalhes:</h4>
+                    <div style="background: #e6fffa; padding: 15px; border-radius: 8px; color: #2d3748;">
+                        <strong>🌱 Empreendimento:</strong> ${resultado.nomeEstabelecimento}<br>
+                        <strong>📏 Porte:</strong> ${dados.porte.toUpperCase()}<br>
+                        <strong>💰 Taxa:</strong> ${calculo.taxaUPF.toFixed(2)} UPF
+                    </div>
+                </div>`;
+            resultBox.style.display = 'block';
+            resultBox.classList.add('sucesso');
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function mostrarResultadoAmbientalLicenca(resultado) {
+            const resultBox = document.getElementById('ambiental-licenca-result');
+            const { calculo, dados } = resultado;
+            let detalhesItens = dados.itensCalculados.map(item => `
+                <div style="display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #e2e8f0; color: #2d3748;">
+                    <span>${item.descricao}</span>
+                    <span style="font-weight: bold;">${item.valorUPF.toFixed(2)} UPF</span>
+                </div>`).join('');
+
+            resultBox.innerHTML = `
+                <h3>✅ Taxas de Licenciamento Ambiental Calculadas!</h3>
+                <div style="font-size: 2em; margin: 15px 0;"><strong>R$ ${calculo.totalReais.toFixed(2)}</strong></div>
+                <div style="font-size: 1.1em;">Total: ${calculo.totalUPF.toFixed(2)} × UPF (R$ ${dados.upfValue.toFixed(2)})</div>
+                <div class="result-details">
+                    <h4 style="margin-bottom: 15px; color: #2d3748;">📊 Detalhamento:</h4>
+                    ${detalhesItens}
+                </div>`;
+            resultBox.style.display = 'block';
+            resultBox.classList.add('sucesso');
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        }
+
+
+        // --- LÓGICA DE LIMPEZA DOS FORMULÁRIOS ---
         function limparFormulario() {
-            document.getElementById('upf-value').value = '';
+            document.getElementById('upf-value').value = '103.67';
+            document.getElementById('alterar-upf-tffr').checked = false;
+            document.getElementById('upf-value').disabled = true;
             document.getElementById('nome-estabelecimento').value = '';
             document.getElementById('tempo-diurno').value = '';
             document.getElementById('tempo-noturno').value = '';
@@ -957,19 +2278,90 @@
             document.getElementById('area-sem-exploracao').value = '0';
             document.getElementById('tffr-result').style.display = 'none';
         }
+        function limparFormularioLocalizacao() {
+            document.getElementById('upf-localizacao').value = '103.67';
+            document.getElementById('alterar-upf-localizacao').checked = false;
+            document.getElementById('upf-localizacao').disabled = true;
+            document.getElementById('nome-estabelecimento-localizacao').value = '';
+            document.getElementById('endereco-localizacao').value = '';
+            document.getElementById('tipo-atividade').value = '';
+            document.getElementById('info-nao-sujeita').style.display = 'none';
+            document.getElementById('localizacao-result').style.display = 'none';
+        }
+        function limparFormularioPublicidade() {
+            document.getElementById('upf-publicidade').value = '103.67';
+            document.getElementById('alterar-upf-publicidade').checked = false;
+            document.getElementById('upf-publicidade').disabled = true;
+            document.getElementById('nome-estabelecimento-publicidade').value = '';
+            document.getElementById('taxa-autorizacao').checked = false;
+            document.querySelectorAll('#tipos-publicidade input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('#tipos-publicidade input[type="number"]').forEach(input => { input.value = ''; input.disabled = true; });
+            document.querySelectorAll('#tipos-publicidade .publicidade-item').forEach(item => item.classList.remove('item-selecionado'));
+            document.getElementById('publicidade-result').style.display = 'none';
+        }
+        function limparFormularioLogradouro() {
+            document.getElementById('upf-logradouro').value = '103.67';
+            document.getElementById('alterar-upf-logradouro').checked = false;
+            document.getElementById('upf-logradouro').disabled = true;
+            document.getElementById('nome-estabelecimento-logradouro').value = '';
+            document.getElementById('taxa-autorizacao-logradouro').checked = false;
+            document.querySelectorAll('#categorias-logradouro input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('#categorias-logradouro input[type="number"]').forEach(input => { input.value = ''; input.disabled = true; });
+            document.querySelectorAll('#categorias-logradouro .logradouro-item').forEach(item => item.classList.remove('item-selecionado'));
+            document.getElementById('logradouro-result').style.display = 'none';
+        }
+        function limparFormularioSanitaria() {
+            document.getElementById('upf-sanitaria').value = '103.67';
+            document.getElementById('alterar-upf-sanitaria').checked = false;
+            document.getElementById('upf-sanitaria').disabled = true;
+            document.getElementById('nome-estabelecimento-sanitaria').value = '';
+            document.getElementById('tipo-taxa-sanitaria').value = '';
+            document.querySelectorAll('.taxa-sanitaria-section').forEach(secao => secao.style.display = 'none');
+            // Limpar campos específicos de cada seção sanitária
+            document.getElementById('area-licenca').value = ''; document.getElementById('reinspecao-licenca').checked = false;
+            document.getElementById('area-tfs').value = ''; document.getElementById('tempo-funcionamento-tfs').value = '';
+            document.querySelectorAll('#tipos-veiculos input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('#tipos-veiculos input[type="number"]').forEach(input => { input.value = ''; input.disabled = true; });
+            document.querySelectorAll('#tipos-veiculos .veiculo-item').forEach(item => item.classList.remove('item-selecionado'));
+            document.getElementById('area-manipulacao').value = ''; document.getElementById('dias-evento').value = ''; document.getElementById('pontos-comercializacao').value = '1';
+            document.getElementById('unidades-habitacionais').value = ''; document.getElementById('qtd-ambulantes').value = '1';
+            document.getElementById('sanitaria-result').style.display = 'none';
+        }
 
-        // Atualizar relatórios
+        function limparFormularioAmbientalFiscalizacao() {
+            document.getElementById('upf-ambiental-fiscalizacao').value = '103.67';
+            document.getElementById('alterar-upf-ambiental-fiscalizacao').checked = false;
+            document.getElementById('upf-ambiental-fiscalizacao').disabled = true;
+            document.getElementById('nome-empreendimento-fiscalizacao').value = '';
+            document.getElementById('porte-fiscalizacao').value = '';
+            document.getElementById('ambiental-fiscalizacao-result').style.display = 'none';
+        }
+
+        function limparFormularioAmbientalLicenca() {
+            document.getElementById('upf-ambiental-licenca').value = '103.67';
+            document.getElementById('alterar-upf-ambiental-licenca').checked = false;
+            document.getElementById('upf-ambiental-licenca').disabled = true;
+            document.getElementById('nome-empreendimento-licenca').value = '';
+            document.getElementById('tipo-licenca-ambiental').value = '';
+            document.getElementById('porte-licenca-ambiental').value = '';
+            document.getElementById('porte-licenca-ambiental').disabled = false;
+            document.getElementById('incluir-eia-rima').checked = false;
+            document.getElementById('incluir-eiv-riv').checked = false;
+            document.getElementById('incluir-certidao-viabilidade').checked = false;
+            document.getElementById('incluir-cadastro-simplificado').checked = false;
+            document.getElementById('porte-certidao-viabilidade').value = '';
+            toggleViabilidadePorte(false);
+            document.getElementById('ambiental-licenca-result').style.display = 'none';
+        }
+
+        // --- LÓGICA DE RELATÓRIOS ---
         function atualizarRelatorios() {
             const container = document.getElementById('relatorios-container');
             const totalContainer = document.getElementById('relatorio-total');
             const valorTotalGeral = document.getElementById('valor-total-geral');
             
             if (relatorios.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align: center; color: #a0aec0; font-size: 1.2em; margin: 50px 0;">
-                        📋 Nenhum cálculo realizado ainda
-                    </div>
-                `;
+                container.innerHTML = `<div style="text-align: center; color: #a0aec0; font-size: 1.2em; margin: 50px 0;">📋 Nenhum cálculo realizado ainda</div>`;
                 totalContainer.style.display = 'none';
                 return;
             }
@@ -977,52 +2369,51 @@
             let totalGeral = 0;
             let html = '';
             
-            relatorios.reverse().forEach((relatorio, index) => {
-                totalGeral += relatorio.calculo.tffrReais;
+            [...relatorios].reverse().forEach(relatorio => { // Usar spread para evitar modificar o array original ao reverter
+                let valorRelatorio = 0;
+                if (relatorio.calculo.tffrReais !== undefined) valorRelatorio = relatorio.calculo.tffrReais;
+                else if (relatorio.calculo.valorReais !== undefined) valorRelatorio = relatorio.calculo.valorReais;
+                else if (relatorio.calculo.totalReais !== undefined) valorRelatorio = relatorio.calculo.totalReais;
+                else if (relatorio.calculo.taxaReais !== undefined) valorRelatorio = relatorio.calculo.taxaReais;
+
+                totalGeral += valorRelatorio;
                 
-                // Mostrar áreas de forma mais clara
-                let areaInfo = '';
-                if (relatorio.dados.areaConstruida > 0) {
-                    areaInfo += `${relatorio.dados.areaConstruida}m² construída`;
+                // Adicionar mais detalhes se necessário, similar à versão 1
+                let detalhesEspecificos = '';
+                 if (relatorio.tipo === 'TFFR') {
+                    detalhesEspecificos = `
+                        <div style="font-size: 0.9em; color: #4a5568; margin-top: 10px;">
+                           Funcionamento: ${relatorio.dados.tempoDiurno}h diurno + ${relatorio.dados.tempoNoturno}h noturno<br>
+                           Áreas: ${relatorio.dados.areaConstruida}m² (C) + ${relatorio.dados.areaEconomica}m² (E) + ${relatorio.dados.areaSemExploracao}m² (S/E)<br>
+                           Total UPF: ${relatorio.calculo.tffr.toFixed(2)}
+                        </div>`;
+                } else if (relatorio.tipo === 'Licença de Localização') {
+                     detalhesEspecificos = `<div style="font-size: 0.9em; color: #4a5568; margin-top: 10px;">Endereço: ${relatorio.dados.endereco || 'N/A'}<br>Total UPF: ${relatorio.calculo.valorUPF.toFixed(1)}</div>`;
+                } else if (relatorio.tipo === 'Taxas de Publicidade' || relatorio.tipo === 'Taxas de Logradouro') {
+                    if(relatorio.calculo.itensCalculados && relatorio.calculo.itensCalculados.length > 0){
+                        detalhesEspecificos = `<div style="font-size: 0.9em; color: #4a5568; margin-top: 10px;">Itens: ${relatorio.calculo.itensCalculados.length}<br>Total UPF: ${relatorio.calculo.totalUPF.toFixed(relatorio.tipo === 'Taxas de Logradouro' ? 4 : 2)}</div>`;
+                    }
+                } else if (relatorio.tipo.includes('Sanitária') || relatorio.tipo.includes('Sanitário')) {
+                     detalhesEspecificos = `<div style="font-size: 0.9em; color: #4a5568; margin-top: 10px;">Total UPF: ${relatorio.calculo.totalUPF.toFixed(2)}</div>`;
+                } else if (relatorio.tipo === 'Fiscalização Ambiental') {
+                    detalhesEspecificos = `<div style="font-size: 0.9em; color: #4a5568; margin-top: 10px;">Porte: ${relatorio.dados.porte.toUpperCase()}<br>Total UPF: ${relatorio.calculo.taxaUPF.toFixed(2)}</div>`;
+                } else if (relatorio.tipo === 'Licenciamento Ambiental') {
+                     if(relatorio.dados.itensCalculados && relatorio.dados.itensCalculados.length > 0){
+                        detalhesEspecificos = `<div style="font-size: 0.9em; color: #4a5568; margin-top: 10px;">Itens: ${relatorio.dados.itensCalculados.length}<br>Total UPF: ${relatorio.calculo.totalUPF.toFixed(2)}</div>`;
+                    }
                 }
-                if (relatorio.dados.areaEconomica > 0) {
-                    if (areaInfo) areaInfo += ', ';
-                    areaInfo += `${relatorio.dados.areaEconomica}m² econômica`;
-                }
-                if (relatorio.dados.areaSemExploracao > 0) {
-                    if (areaInfo) areaInfo += ', ';
-                    areaInfo += `${relatorio.dados.areaSemExploracao}m² s/ exploração`;
-                }
-                
+
+
                 html += `
                     <div class="relatorio-item">
                         <div class="relatorio-header">
                             <div>
-                                <h3 style="color: #2d3748;">🏢 ${relatorio.tipo} - ${relatorio.nomeEstabelecimento}</h3>
+                                <h3 style="color: #2d3748;">${getIconeRelatorio(relatorio.tipo)} ${relatorio.tipo} - ${relatorio.nomeEstabelecimento || relatorio.nomeEmpreendimento}</h3>
                                 <p style="color: #4a5568; margin: 5px 0;">📅 ${relatorio.data} às ${relatorio.hora}</p>
                             </div>
-                            <div class="relatorio-valor">R$ ${relatorio.calculo.tffrReais.toFixed(2)}</div>
+                            <div class="relatorio-valor">R$ ${valorRelatorio.toFixed(2)}</div>
                         </div>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
-                            <div>
-                                <strong>⏰ Funcionamento:</strong><br>
-                                ${relatorio.dados.tempoDiurno}h diurnas + ${relatorio.dados.tempoNoturno}h noturnas
-                            </div>
-                            <div>
-                                <strong>📏 Áreas:</strong><br>
-                                ${areaInfo}
-                            </div>
-                            <div>
-                                <strong>💰 UPF:</strong><br>
-                                R$ ${relatorio.dados.upfValue.toFixed(2)}
-                            </div>
-                            <div>
-                                <strong>🧮 Fator:</strong><br>
-                                ${relatorio.calculo.tffr.toFixed(2)} × UPF
-                            </div>
-                        </div>
-                        
+                        ${detalhesEspecificos}
                         <div style="margin-top: 15px; text-align: right;">
                             <button class="calc-button" style="background: #e53e3e; font-size: 0.9em; padding: 8px 15px;" onclick="removerRelatorio(${relatorio.id})">🗑️ Remover</button>
                         </div>
@@ -1030,14 +2421,20 @@
                 `;
             });
             
-            relatorios.reverse(); // Voltar à ordem original
-            
             container.innerHTML = html;
             valorTotalGeral.textContent = `R$ ${totalGeral.toFixed(2)}`;
             totalContainer.style.display = 'block';
         }
 
-        // Remover relatório específico
+        function getIconeRelatorio(tipo) {
+            const icones = {
+                'TFFR': '🏢', 'Licença de Localização': '📍', 'Taxas de Publicidade': '📢',
+                'Taxas de Logradouro': '🛣️', 'Fiscalização Ambiental': '🌱', 'Licenciamento Ambiental': '🌿'
+            };
+            if(tipo && tipo.includes('Sanit')) return '🧪'; // Verifica se tipo não é undefined antes de chamar includes
+            return icones[tipo] || '📄';
+        }
+
         function removerRelatorio(id) {
             if (confirm('Tem certeza que deseja remover este relatório?')) {
                 relatorios = relatorios.filter(r => r.id !== id);
@@ -1046,110 +2443,123 @@
             }
         }
 
-        // Limpar todos os relatórios
         function limparRelatorios() {
-            if (confirm('Tem certeza que deseja remover TODOS os relatórios? Esta ação não pode ser desfeita.')) {
+            if (confirm('Tem certeza que deseja remover TODOS os relatórios?')) {
                 relatorios = [];
                 salvarRelatorios();
                 atualizarRelatorios();
             }
         }
 
-        // Exportar relatórios
         function exportarRelatorios() {
-            if (relatorios.length === 0) {
-                alert('Não há relatórios para exportar.');
-                return;
-            }
+            if (relatorios.length === 0) { alert('Não há relatórios para exportar.'); return; }
             
             let conteudo = `RELATÓRIO DE TAXAS MUNICIPAIS - PORTO VELHO\n`;
             conteudo += `Gerado em: ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}\n`;
             conteudo += `${'='.repeat(60)}\n\n`;
-            
-            let totalGeral = 0;
-            
+            let totalGeralExport = 0;
+
             relatorios.forEach((relatorio, index) => {
-                totalGeral += relatorio.calculo.tffrReais;
+                let valorRelatorio = 0;
+                if (relatorio.calculo.tffrReais !== undefined) valorRelatorio = relatorio.calculo.tffrReais;
+                else if (relatorio.calculo.valorReais !== undefined) valorRelatorio = relatorio.calculo.valorReais;
+                else if (relatorio.calculo.totalReais !== undefined) valorRelatorio = relatorio.calculo.totalReais;
+                else if (relatorio.calculo.taxaReais !== undefined) valorRelatorio = relatorio.calculo.taxaReais;
                 
-                // Calcular área total para exportação
-                const areaTotal = relatorio.dados.areaConstruida + relatorio.dados.areaEconomica + relatorio.dados.areaSemExploracao;
-                
-                // Montar string da soma das áreas para exportação
-                let areaSoma = '';
-                let areaDetalhes = '';
-                const areas = [];
-                
-                if (relatorio.dados.areaConstruida > 0) {
-                    areas.push(relatorio.dados.areaConstruida.toLocaleString('pt-BR'));
-                    areaDetalhes += `${relatorio.dados.areaConstruida.toLocaleString('pt-BR')}m² construída`;
-                }
-                if (relatorio.dados.areaEconomica > 0) {
-                    areas.push(relatorio.dados.areaEconomica.toLocaleString('pt-BR'));
-                    if (areaDetalhes) areaDetalhes += ', ';
-                    areaDetalhes += `${relatorio.dados.areaEconomica.toLocaleString('pt-BR')}m² econômica`;
-                }
-                if (relatorio.dados.areaSemExploracao > 0) {
-                    areas.push(relatorio.dados.areaSemExploracao.toLocaleString('pt-BR'));
-                    if (areaDetalhes) areaDetalhes += ', ';
-                    areaDetalhes += `${relatorio.dados.areaSemExploracao.toLocaleString('pt-BR')}m² sem exploração`;
-                }
-                
-                if (areas.length > 1) {
-                    areaSoma = `${areas.join(' + ')} = ${areaTotal.toLocaleString('pt-BR')} m²`;
-                } else {
-                    areaSoma = `${areaTotal.toLocaleString('pt-BR')} m²`;
-                }
-                
-                conteudo += `${index + 1}. ${relatorio.tipo} - ${relatorio.nomeEstabelecimento}\n`;
+                totalGeralExport += valorRelatorio;
+                const nome = relatorio.nomeEstabelecimento || relatorio.nomeEmpreendimento || 'N/A';
+
+                conteudo += `${index + 1}. ${relatorio.tipo} - ${nome}\n`;
                 conteudo += `   Data: ${relatorio.data} às ${relatorio.hora}\n`;
-                conteudo += `   Funcionamento: ${relatorio.dados.tempoDiurno}h diurnas + ${relatorio.dados.tempoNoturno}h noturnas\n`;
-                conteudo += `   Área Total: ${areaSoma}\n`;
-                conteudo += `   Detalhes: ${areaDetalhes}\n`;
-                conteudo += `   UPF: R$ ${relatorio.dados.upfValue.toFixed(2)}\n`;
-                conteudo += `   Fator: ${relatorio.calculo.tffr.toFixed(2)} × UPF\n`;
-                conteudo += `   VALOR: R$ ${relatorio.calculo.tffrReais.toFixed(2)}\n`;
+                conteudo += `   UPF Base: R$ ${relatorio.dados.upfValue.toFixed(2)}\n`;
+
+                if (relatorio.tipo === 'TFFR') {
+                    conteudo += `   Funcionamento: ${relatorio.dados.tempoDiurno}h diurno + ${relatorio.dados.tempoNoturno}h noturno\n`;
+                    conteudo += `   Áreas: ${relatorio.dados.areaConstruida}m² (C), ${relatorio.dados.areaEconomica}m² (E), ${relatorio.dados.areaSemExploracao}m² (S/E)\n`;
+                    conteudo += `   Total UPF (TFFR): ${relatorio.calculo.tffr.toFixed(2)}\n`;
+                } else if (relatorio.tipo === 'Licença de Localização') {
+                    conteudo += `   Endereço: ${relatorio.dados.endereco || 'N/A'}\n`;
+                    conteudo += `   Total UPF (Localização): ${relatorio.calculo.valorUPF.toFixed(1)}\n`;
+                } else if (relatorio.tipo === 'Taxas de Publicidade' || relatorio.tipo === 'Taxas de Logradouro') {
+                    if(relatorio.calculo.itensCalculados){
+                        relatorio.calculo.itensCalculados.forEach(item => {
+                            conteudo += `     - ${item.tipo || item.descricao}: ${item.valorUPF.toFixed(item.tipo === 'Taxas de Logradouro' ? 4 : 2)} UPF (R$ ${item.valorReais.toFixed(2)})\n`;
+                        });
+                    }
+                    conteudo += `   Total UPF (${relatorio.tipo}): ${relatorio.calculo.totalUPF.toFixed(relatorio.tipo === 'Taxas de Logradouro' ? 4 : 2)}\n`;
+                } else if (relatorio.tipo.includes('Sanit')) {
+                     conteudo += `   Total UPF (${relatorio.tipo}): ${relatorio.calculo.totalUPF.toFixed(2)}\n`;
+                } else if (relatorio.tipo === 'Fiscalização Ambiental') {
+                    conteudo += `   Porte: ${relatorio.dados.porte.toUpperCase()}\n`;
+                    conteudo += `   Total UPF (Fiscalização Ambiental): ${relatorio.calculo.taxaUPF.toFixed(2)}\n`;
+                } else if (relatorio.tipo === 'Licenciamento Ambiental') {
+                     if(relatorio.dados.itensCalculados){
+                        relatorio.dados.itensCalculados.forEach(item => {
+                             conteudo += `     - ${item.descricao}: ${item.valorUPF.toFixed(2)} UPF\n`;
+                        });
+                    }
+                    conteudo += `   Total UPF (Licenciamento Ambiental): ${relatorio.calculo.totalUPF.toFixed(2)}\n`;
+                }
+                
+                conteudo += `   VALOR: R$ ${valorRelatorio.toFixed(2)}\n`;
                 conteudo += `   ${'-'.repeat(40)}\n\n`;
             });
-            
-            conteudo += `TOTAL GERAL: R$ ${totalGeral.toFixed(2)}\n`;
+
+            conteudo += `TOTAL GERAL DOS RELATÓRIOS: R$ ${totalGeralExport.toFixed(2)}\n`;
             conteudo += `${'='.repeat(60)}\n`;
-            
-            // Criar e baixar arquivo
+
             const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
-            const url = window.URL.createObjectURL(blob);
+            const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `relatorio_taxas_${new Date().toLocaleDateString('pt-BR').replace(/\//g, '-')}.txt`;
+            a.download = `relatorio_taxas_calculadora_${new Date().toISOString().slice(0,10)}.txt`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
+            URL.revokeObjectURL(url);
+        }
+
+
+        function setupUpfHandlers() {
+            document.querySelectorAll('.alterar-upf-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const upfInput = document.getElementById(this.dataset.targetInput);
+                    if (upfInput) {
+                        upfInput.disabled = !this.checked;
+                        if (!this.checked) upfInput.value = '103.67';
+                        if (this.checked) upfInput.focus();
+                    }
+                });
+            });
         }
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             try {
-                // Garantir que as variáveis globais estão definidas
-                if (typeof relatorios === 'undefined') {
-                    relatorios = [];
-                }
-                if (typeof currentCalculator === 'undefined') {
-                    currentCalculator = 'tffr';
-                }
+                if (typeof relatorios === 'undefined') relatorios = [];
+                if (typeof currentCalculator === 'undefined') currentCalculator = 'tffr';
                 
                 carregarRelatorios();
-                preencherTabelaFatores();
+                preencherTabelaFatores(); // Chamada restaurada
                 atualizarRelatorios();
+                setupUpfHandlers();
                 
-                console.log('App inicializado com sucesso');
+                mostrarCalculadora('tffr'); // Chamada que internamente usa preencherTabelaFatores()
+                
+                document.querySelectorAll('#tipos-publicidade input[type="number"], #categorias-logradouro input[type="number"], #tipos-veiculos input[type="number"]')
+                    .forEach(input => { input.disabled = true; });
+                
+                console.log('App inicializado com sucesso - 7 calculadoras disponíveis');
             } catch (error) {
                 console.error('Erro na inicialização:', error);
-                // Fallback: garantir que o app funcione mesmo com erros
                 relatorios = [];
                 currentCalculator = 'tffr';
-                preencherTabelaFatores();
+                // Tentar garantir que a tabela seja preenchida mesmo em caso de erro anterior
+                try { preencherTabelaFatores(); } catch (e) { console.error("Falha ao preencher tabela no fallback:", e); }
+                mostrarCalculadora('tffr');
             }
         });
     </script>
 </body>
 </html>
+ 
